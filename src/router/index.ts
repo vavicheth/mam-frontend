@@ -208,6 +208,8 @@ import TestPage from "../components/Pages/Test/TestPage.vue"
 
 
 import ErrorPage from "../pages/ErrorPage.vue";
+import DashboardPage from "@/pages/Dashboard/DashboardPage.vue";
+import StaffListPage from "@/pages/Staff/StaffListPage.vue";
 
 const routes = [
   {
@@ -217,9 +219,31 @@ const routes = [
   },
   {
     path: "/dashboard",
-    name: "EcommercePage",
-    component: EcommercePage,
+    name: "Dashboard",
+    component: DashboardPage,
   },
+  {
+    path: "/events",
+    name: "Events",
+    component: EventsListPage,
+  },
+  {
+    path: "/staff",
+    name: "StaffListPage",
+    component: StaffListPage,
+  },
+
+  {
+    path: "/users",
+    name: "UserListPage",
+    component: UsersListPage,
+  },
+
+
+
+
+
+
   {
     path: "/starter",
     name: "StarterPage",
@@ -267,6 +291,21 @@ const routes = [
     path: "/social/settings",
     name: "SettingsPage",
     component: SettingsPage,
+  },
+  {
+    path: "/authentication/sign-in",
+    name: "SignInPage",
+    component: SignInPage,
+  },
+  {
+    path: "/authentication/sign-up",
+    name: "SignUpPage",
+    component: SignUpPage,
+  },
+  {
+    path: "/authentication/lock-screen",
+    name: "LockScreenPage",
+    component: LockScreenPage,
   },
 
   // {
@@ -1117,16 +1156,7 @@ const routes = [
   //   name: "MoreChartsPage",
   //   component: MoreChartsPage,
   // },
-  // {
-  //   path: "/authentication/sign-in",
-  //   name: "SignInPage",
-  //   component: SignInPage,
-  // },
-  // {
-  //   path: "/authentication/sign-up",
-  //   name: "SignUpPage",
-  //   component: SignUpPage,
-  // },
+
   // {
   //   path: "/authentication/forgot-password",
   //   name: "ForgotPasswordPage",
@@ -1142,11 +1172,7 @@ const routes = [
   //   name: "ConfirmMailPage",
   //   component: ConfirmMailPage,
   // },
-  // {
-  //   path: "/authentication/lock-screen",
-  //   name: "LockScreenPage",
-  //   component: LockScreenPage,
-  // },
+
   // {
   //   path: "/authentication/logout",
   //   name: "LogOutPage",

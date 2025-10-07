@@ -8,7 +8,7 @@
           class="xl:ltr:-mr-[25px] xl:rtl:-ml-[25px] 2xl:ltr:-mr-[45px] 2xl:rtl:-ml-[45px] rounded-[25px] order-2 lg:order-1"
         >
           <img
-            src="@/assets/images/lock-screen.jpg"
+            src="@/assets/images/illustration/undraw_secure-login_m11a.svg"
             alt="lock-screen-image"
             class="rounded-[25px]"
           />
@@ -17,15 +17,16 @@
           class="xl:ltr:pl-[90px] xl:rtl:pr-[90px] 2xl:ltr:pl-[120px] 2xl:rtl:pr-[120px] order-1 lg:order-2"
         >
           <img
-            src="@/assets/images/logo-big.svg"
+            src="@/assets/images/logo/Logo-text.svg"
             alt="logo"
             class="inline-block dark:hidden"
           />
-          <img
-            src="@/assets/images/white-logo-big.svg"
-            alt="logo"
-            class="hidden dark:inline-block"
-          />
+
+<!--          <img-->
+<!--            src="@/assets/images/white-logo-big.svg"-->
+<!--            alt="logo"-->
+<!--            class="hidden dark:inline-block"-->
+<!--          />-->
           <div class="my-[17px] md:my-[25px]">
             <h1
               class="!font-semibold !text-[22px] md:!text-xl lg:!text-2xl !mb-[5px] md:!mb-[10px]"
