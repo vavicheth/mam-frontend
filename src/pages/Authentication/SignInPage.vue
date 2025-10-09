@@ -19,6 +19,9 @@ export default defineComponent({
     onBeforeUnmount(() => {
       document.body.classList.remove("bg-white");
     });
+
+
+
   },
 });
 </script>

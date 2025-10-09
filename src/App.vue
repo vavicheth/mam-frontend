@@ -57,17 +57,18 @@ export default defineComponent({
     const route = useRoute();
 
     const hiddenRoutes = [
-      "/",
+      // "/",
       "/features",
       "/team",
       "/faq",
       "/contact",
       "/authentication/sign-in",
+      "/login",
       "/authentication/sign-up",
       "/authentication/forgot-password",
       "/authentication/reset-password",
       "/authentication/confirm-email",
-      "/authentication/lock-screen",
+      "/lock-screen",
       "/authentication/logout",
       "/extra-pages/coming-soon",
     ];
