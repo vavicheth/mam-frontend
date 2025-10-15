@@ -62,51 +62,22 @@
           </RouterLink>
         </div>
 
-<!--        <div-->
-<!--          class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap"-->
-<!--        >-->
-<!--          <button-->
-<!--            class="accordion-button toggle flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c]"-->
-<!--            type="button"-->
-<!--          >-->
-<!--            <i-->
-<!--              class="material-symbols-outlined transition-all text-gray-500 dark:text-gray-400 ltr:mr-[7px] rtl:ml-[7px] !text-[22px] leading-none relative -top-px"-->
-<!--            >-->
-<!--              event_list-->
-<!--            </i>-->
-<!--            <span class="title leading-none"> Meetings </span>-->
+        <div
+            class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap"
+        >
+          <RouterLink
+              to="/departments"
+              class="accordion-button flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c]"
+          >
+            <i
+                class="material-symbols-outlined transition-all text-gray-500 dark:text-gray-400 ltr:mr-[7px] rtl:ml-[7px] !text-[22px] leading-none relative -top-px"
+            >
+              account_balance
+            </i>
+            <span class="title leading-none"> Departments </span>
+          </RouterLink>
+        </div>
 
-<!--          </button>-->
-<!--          <div class="accordion-collapse hidden">-->
-<!--            <div class="pt-[4px]">-->
-<!--              <ul class="sidebar-sub-menu">-->
-<!--                <li class="sidemenu-item mb-[4px] last:mb-0">-->
-<!--                  <RouterLink-->
-<!--                    to="/dashboard"-->
-<!--                    class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]"-->
-<!--                  >-->
-<!--                    eCommerce-->
-<!--                  </RouterLink>-->
-<!--                </li>-->
-<!--                <li class="sidemenu-item mb-[4px] last:mb-0">-->
-<!--                  <RouterLink-->
-<!--                    to="/dashboard/crm"-->
-<!--                    class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]"-->
-<!--                  >-->
-<!--                    CRM-->
-<!--                  </RouterLink>-->
-<!--                </li>-->
-<!--              </ul>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-
-
-<!--        <span-->
-<!--            class="block relative font-medium uppercase text-gray-400 mb-[8px] text-xs"-->
-<!--        >-->
-<!--          Configuration-->
-<!--        </span>-->
         <div
             class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap"
         >

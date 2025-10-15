@@ -115,7 +115,7 @@ export default {
   components: {
   },
   setup() {
-    const { login } = useAuth();
+    const { login,logout } = useAuth();
     const loading = ref(false);
     const showPassword = ref(false);
     const credentials = ref({
@@ -124,7 +124,9 @@ export default {
     });
 
     onMounted(() => {
+      logout();
       document.body.classList.add("bg-white");
+
     });
 
     onBeforeUnmount(() => {
@@ -138,14 +140,16 @@ export default {
     const handleLogin = async () => {
       loading.value = true;
       console.log("login", login(login));
-      // try {
-      //   await login(credentials.value);
-      //   console.log("Login successful");
-      // } catch (error) {
-      //   console.error('Login error:', error);
-      // } finally {
-      //   loading.value = false;
-      // }
+      try {
+        console.log('start login');
+        await login(credentials.value);
+        console.log("Login successful");
+      } catch (error) {
+        console.error('Login error:', error);
+      } finally {
+        loading.value = false;
+        console.log('finally', loading.value);
+      }
     };
 
     return {

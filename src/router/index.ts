@@ -28,6 +28,8 @@ import ErrorPage from "../pages/ErrorPage.vue";
 import DashboardPage from "@/pages/Dashboard/DashboardPage.vue";
 import StaffListPage from "@/pages/Staff/StaffListPage.vue";
 import LoginPage from "@/pages/Authentication/LoginPage.vue";
+import DepartmentsListPage from "@/pages/Departments/DepartmentsListPage.vue";
+import DepartmentViewPage from "@/pages/Departments/DepartmentViewPage.vue";
 
 const routes = [
   {
@@ -41,7 +43,10 @@ const routes = [
     name: "Dashboard",
     component: DashboardPage,
   },
-  { path: '/', component: DashboardPage, alias: '/dashboard' },
+  {
+    path: '/',
+    redirect: '/dashboard', // This redirects the root path to /dashboard
+  },
   {
     path: "/events",
     name: "Events",
@@ -52,16 +57,25 @@ const routes = [
     name: "StaffListPage",
     component: StaffListPage,
   },
+  {
+    path: "/departments",
+    name: "DepartmentListPage",
+    component: DepartmentsListPage,
+    children: [
+      {
+        path: "/departments/:departmentId",
+        name: "DepartmentViewPage",
+        component: DepartmentViewPage,
+      },
+
+    ]
+  },
 
   {
     path: "/users",
     name: "UserListPage",
     component: UsersListPage,
   },
-
-
-
-
 
 
   {

@@ -20,6 +20,7 @@
     "@tailwindcss/vite": "^4.1.5",
     "@vueup/vue-quill": "^1.2.0",
     "apexcharts": "^4.7.0",
+    "axios": "^1.12.2",
     "prismjs": "^1.30.0",
     "quill": "^2.0.3",
     "swiper": "^11.2.6",
