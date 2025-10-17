@@ -19,9 +19,9 @@
           </button>
         </div>
 
-        <SearchFrom />
+<!--        <SearchFrom />-->
 
-        <WebApps />
+<!--        <WebApps />-->
       </div>
       <div
         class="flex items-center justify-center md:justify-normal mt-[13px] md:mt-0"
@@ -31,14 +31,14 @@
         >
           <DarkSwtichBtn />
         </div>
-        <LanguageMenu />
+<!--        <LanguageMenu />-->
         <div
           class="relative mx-[8px] md:mx-[10px] lg:mx-[12px] ltr:first:ml-0 ltr:last:mr-0 rtl:first:mr-0 rtl:last:ml-0"
         >
           <ToggleFullscreenBtn />
         </div>
 
-        <NotificationsLists />
+<!--        <NotificationsLists />-->
 
         <AdminProfile />
 

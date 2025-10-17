@@ -30,6 +30,8 @@ import StaffListPage from "@/pages/Staff/StaffListPage.vue";
 import LoginPage from "@/pages/Authentication/LoginPage.vue";
 import DepartmentsListPage from "@/pages/Departments/DepartmentsListPage.vue";
 import DepartmentViewPage from "@/pages/Departments/DepartmentViewPage.vue";
+import DepartmentEditPage from "@/pages/Departments/DepartmentEditPage.vue";
+import StaffViewPage from "@/pages/Staff/StaffViewPage.vue";
 
 const routes = [
   {
@@ -58,17 +60,24 @@ const routes = [
     component: StaffListPage,
   },
   {
+    path: "/staff/:staffId",
+    name: "StaffViewPage",
+    component: StaffViewPage,
+  },
+  {
     path: "/departments",
     name: "DepartmentListPage",
     component: DepartmentsListPage,
-    children: [
-      {
-        path: "/departments/:departmentId",
-        name: "DepartmentViewPage",
-        component: DepartmentViewPage,
-      },
-
-    ]
+  },
+  {
+    path: "/departments/:departmentId",
+    name: "DepartmentViewPage",
+    component: DepartmentViewPage,
+  },
+  {
+    path: "/departments/:departmentId/edit",
+    name: "DepartmentEditPage",
+    component: DepartmentEditPage,
   },
 
   {

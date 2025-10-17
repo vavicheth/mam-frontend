@@ -66,6 +66,13 @@
           <i class="material-symbols-outlined !text-[18px]">edit</i>
           Edit Department
         </RouterLink>
+        <button
+            type="button"
+            class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-danger-500 border border-danger-500 hover:bg-danger-500 hover:text-white rounded-md transition-colors"
+        >
+          <i class="material-symbols-outlined !text-[18px]">delete</i>
+          Delete
+        </button>
       </div>
 
       <div class="flex items-center justify-between mb-4">
@@ -96,122 +103,147 @@
           {{ department.description || 'No description available' }}
         </p>
       </div>
+
+
     </div>
 
-    <!-- Staffs in department -->
+    <!-- Department Information Card -->
     <div class="trezo-card bg-white dark:bg-[#0c1427] p-[20px] md:p-[25px] rounded-md">
-      <h4 class="text-lg font-semibold text-black dark:text-white mb-4 pb-3 border-b border-gray-100 dark:border-[#172036]">
-        Staff in Department ({{ department.staffs?.length || 0 }} staff members)
-      </h4>
+      <h3 class="text-lg font-semibold text-black dark:text-white mb-4 pb-3 border-b border-gray-100 dark:border-[#172036]">
+        Department Information
+      </h3>
 
-      <!-- Empty State -->
-      <div v-if="!department.staffs || department.staffs.length === 0" class="flex flex-col items-center justify-center py-12">
-        <div class="flex items-center justify-center w-16 h-16 mx-auto bg-gray-100 dark:bg-[#15203c] rounded-full mb-4">
-          <i class="material-symbols-outlined text-gray-400 !text-[32px]">group</i>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Department ID -->
+        <div class="space-y-1">
+          <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+            Department ID
+          </label>
+          <p class="text-sm text-black dark:text-white font-mono bg-gray-50 dark:bg-[#15203c] px-3 py-2 rounded-md">
+            {{ department._id }}
+          </p>
         </div>
-        <h3 class="text-lg font-semibold text-black dark:text-white mb-2">
-          No Staff Members
-        </h3>
-        <p class="text-sm text-gray-600 dark:text-gray-400 text-center">
-          There are currently no staff members assigned to this department.
-        </p>
+
+        <!-- Status -->
+        <div class="space-y-1">
+          <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+            Status
+          </label>
+          <p class="text-sm text-black dark:text-white">
+            <span
+              :class="department.active
+                ? 'px-[8px] py-[3px] inline-block bg-success-50 dark:bg-[#15203c] text-success-500 rounded-sm font-medium'
+                : 'px-[8px] py-[3px] inline-block bg-danger-50 dark:bg-[#15203c] text-danger-500 rounded-sm font-medium'"
+            >
+              {{ department.active ? 'Active' : 'Inactive' }}
+            </span>
+          </p>
+        </div>
+
+        <!-- Department Name (English) -->
+        <div class="space-y-1">
+          <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+            Department Name (English)
+          </label>
+          <p class="text-sm text-black dark:text-white font-medium">
+            {{ department.name_en }}
+          </p>
+        </div>
+
+        <!-- Department Name (Khmer) -->
+        <div class="space-y-1">
+          <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+            Department Name (Khmer)
+          </label>
+          <p class="text-sm text-black dark:text-white font-medium">
+            {{ department.name_kh }}
+          </p>
+        </div>
+
+        <!-- Description (Full Width) -->
+        <div class="space-y-1 md:col-span-2">
+          <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+            Description
+          </label>
+          <p class="text-sm text-black dark:text-white leading-relaxed bg-gray-50 dark:bg-[#15203c] px-4 py-3 rounded-md">
+            {{ department.description || 'No description available' }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional Information Card (if needed for future expansion) -->
+    <div class="trezo-card bg-white dark:bg-[#0c1427] p-[20px] md:p-[25px] rounded-md">
+      <h3 class="text-lg font-semibold text-black dark:text-white mb-4 pb-3 border-b border-gray-100 dark:border-[#172036]">
+        Statistics
+      </h3>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <!-- Total Staff -->
+        <div class="bg-gray-50 dark:bg-[#15203c] p-4 rounded-md">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-primary-50 dark:bg-primary-500/10 rounded-full flex items-center justify-center">
+              <i class="material-symbols-outlined text-primary-500 !text-[24px]">group</i>
+            </div>
+            <div>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Total Staff</p>
+              <p class="text-2xl font-bold text-black dark:text-white">0</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Events -->
+        <div class="bg-gray-50 dark:bg-[#15203c] p-4 rounded-md">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-success-50 dark:bg-success-500/10 rounded-full flex items-center justify-center">
+              <i class="material-symbols-outlined text-success-500 !text-[24px]">event</i>
+            </div>
+            <div>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Active Events</p>
+              <p class="text-2xl font-bold text-black dark:text-white">0</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Total Meetings -->
+        <div class="bg-gray-50 dark:bg-[#15203c] p-4 rounded-md">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-warning-50 dark:bg-warning-500/10 rounded-full flex items-center justify-center">
+              <i class="material-symbols-outlined text-warning-500 !text-[24px]">meeting_room</i>
+            </div>
+            <div>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Total Meetings</p>
+              <p class="text-2xl font-bold text-black dark:text-white">0</p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- Staff Table -->
-      <div v-else class="table-responsive overflow-x-auto">
-        <table class="w-full">
-          <thead class="text-black dark:text-white">
-          <tr>
-            <th
-                class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] bg-gray-50 dark:bg-[#15203c] whitespace-nowrap ltr:first:rounded-tl-md ltr:last:rounded-tr-md rtl:first:rounded-tr-md rtl:last:rounded-tl-md"
-            >
-              Name (KH)
-            </th>
-            <th
-                class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] bg-gray-50 dark:bg-[#15203c] whitespace-nowrap ltr:first:rounded-tl-md ltr:last:rounded-tr-md rtl:first:rounded-tr-md rtl:last:rounded-tl-md"
-            >
-              Name (EN)
-            </th>
-            <th
-                class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] bg-gray-50 dark:bg-[#15203c] whitespace-nowrap ltr:first:rounded-tl-md ltr:last:rounded-tr-md rtl:first:rounded-tr-md rtl:last:rounded-tl-md"
-            >
-              Gender
-            </th>
-            <th
-                class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] bg-gray-50 dark:bg-[#15203c] whitespace-nowrap ltr:first:rounded-tl-md ltr:last:rounded-tr-md rtl:first:rounded-tr-md rtl:last:rounded-tl-md"
-            >
-              Position
-            </th>
-            <th
-                class="font-medium ltr:text-left rtl:text-right px-[20px] py-[11px] bg-gray-50 dark:bg-[#15203c] whitespace-nowrap ltr:first:rounded-tl-md ltr:last:rounded-tr-md rtl:first:rounded-tr-md rtl:last:rounded-tl-md"
-            >
-              Description
-            </th>
-          </tr>
-          </thead>
-          <tbody class="text-black dark:text-white">
-          <tr v-for="(staff, index) in department.staffs" :key="staff._id || index">
-            <td
-                class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036] ltr:first:border-l ltr:last:border-r rtl:first:border-r rtl:last:border-l"
-            >
-              {{ staff.name_kh || '-' }}
-            </td>
-            <td
-                class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036] ltr:first:border-l ltr:last:border-r rtl:first:border-r rtl:last:border-l"
-            >
-              {{ staff.name_en || '-' }}
-            </td>
-            <td
-                class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036] ltr:first:border-l ltr:last:border-r rtl:first:border-r rtl:last:border-l"
-            >
-              {{ staff.gender || '-' }}
-            </td>
-            <td
-                class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036] ltr:first:border-l ltr:last:border-r rtl:first:border-r rtl:last:border-l"
-            >
-              {{ staff.position || '-' }}
-            </td>
-            <td
-                class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036] ltr:first:border-l ltr:last:border-r rtl:first:border-r rtl:last:border-l"
-            >
-              {{ staff.description || '-' }}
-            </td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-
+      <p class="text-xs text-gray-500 dark:text-gray-400 mt-4 italic">
+        Statistics feature coming soon...
+      </p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import PageTitle from "@/components/Common/PageTitle.vue";
 import axios from 'axios';
 
 // Types
-interface Staff {
-  _id: string;
-  name_kh: string;
-  name_en: string;
-  gender: string;
-  position: string;
-  description: string;
-}
-
 interface Department {
   _id: string;
   name_kh: string;
   name_en: string;
   description: string;
   active: boolean;
-  staffs: Staff[];
 }
 
 // Router
 const route = useRoute();
+const router = useRouter();
 
 // State
 const department = ref<Department | null>(null);
@@ -231,21 +263,8 @@ const fetchDepartment = async () => {
   error.value = null;
 
   try {
-
-    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/departments/${departmentId}`, {
-      // params,
-      // headers: {
-      //   Authorization: `Bearer ${token}`
-      // }
-    });
-
-    // Ensure staffs is always an array
-    if (data && !Array.isArray(data.staffs)) {
-      data.staffs = [];
-    }
-
+    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/departments/${departmentId}`);
     department.value = data;
-
   } catch (err: any) {
     console.error('Failed to fetch department:', err);
     if (err.response?.status === 404) {

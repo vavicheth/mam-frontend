@@ -81,95 +81,33 @@
         <div
             class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap"
         >
-          <button
-              class="accordion-button toggle flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c]"
-              type="button"
+          <RouterLink
+              to="/staff"
+              class="accordion-button flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c]"
+          >
+            <i
+                class="material-symbols-outlined transition-all text-gray-500 dark:text-gray-400 ltr:mr-[7px] rtl:ml-[7px] !text-[22px] leading-none relative -top-px"
+            >
+              group
+            </i>
+            <span class="title leading-none"> Staff </span>
+          </RouterLink>
+        </div>
+
+        <div
+            class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap"
+        >
+          <RouterLink
+              to="/users"
+              class="accordion-button flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c]"
           >
             <i
                 class="material-symbols-outlined transition-all text-gray-500 dark:text-gray-400 ltr:mr-[7px] rtl:ml-[7px] !text-[22px] leading-none relative -top-px"
             >
               groups
             </i>
-            <span class="title leading-none"> Users Managment </span>
-
-          </button>
-          <div class="accordion-collapse hidden">
-            <div class="pt-[4px]">
-              <ul class="sidebar-sub-menu">
-                <li class="sidemenu-item mb-[4px] last:mb-0">
-                  <RouterLink
-                      to="/users"
-                      class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]"
-                  >
-                    Users
-                  </RouterLink>
-                </li>
-                <li class="sidemenu-item mb-[4px] last:mb-0">
-                  <RouterLink
-                      to="/dashboard/crm"
-                      class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]"
-                  >
-                    Role
-                  </RouterLink>
-                </li>
-                <li class="sidemenu-item mb-[4px] last:mb-0">
-                  <RouterLink
-                      to="/dashboard/crm"
-                      class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]"
-                  >
-                    Permission
-                  </RouterLink>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div
-              class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap"
-          >
-            <button
-                class="accordion-button toggle flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c]"
-                type="button"
-            >
-              <i
-                  class="material-symbols-outlined transition-all text-gray-500 dark:text-gray-400 ltr:mr-[7px] rtl:ml-[7px] !text-[22px] leading-none relative -top-px"
-              >
-                settings
-              </i>
-              <span class="title leading-none"> Settings </span>
-            </button>
-            <div class="accordion-collapse hidden">
-              <div class="pt-[4px]">
-                <ul class="sidebar-sub-menu">
-                  <li class="sidemenu-item mb-[4px] last:mb-0">
-                    <RouterLink
-                        to="/staff"
-                        class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]"
-                    >
-                      Staff
-                    </RouterLink>
-                  </li>
-                  <li class="sidemenu-item mb-[4px] last:mb-0">
-                    <RouterLink
-                        to="/dashboard/test"
-                        class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]"
-                    >
-                      App
-                    </RouterLink>
-                  </li>
-                  <li class="sidemenu-item mb-[4px] last:mb-0">
-                    <RouterLink
-                        to="/dashboard/crm"
-                        class="sidemenu-link rounded-md flex items-center relative transition-all font-medium text-gray-500 dark:text-gray-400 py-[9px] ltr:pl-[38px] ltr:pr-[30px] rtl:pr-[38px] rtl:pl-[30px] hover:text-primary-500 hover:bg-primary-50 w-full text-left dark:hover:bg-[#15203c]"
-                    >
-                      Event
-                    </RouterLink>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
+            <span class="title leading-none"> Users Management </span>
+          </RouterLink>
         </div>
 
         <div class="border-gray-200 dark:border-gray-200 py-[9px]"></div>

@@ -1,5 +1,139 @@
 <template>
   <PageTitle pageTitle="Departments List" subTitle="Departments" />
+  <!-- Add New Department Popup -->
+  <div
+      :class="[
+      'add-new-popup z-[999] fixed transition-all inset-0 overflow-x-hidden overflow-y-auto lg:py-[20px]',
+      { active: showNewModal },
+    ]"
+  >
+    <div
+        class="popup-dialog flex transition-all max-w-[550px] min-h-full items-center mx-auto"
+    >
+      <div
+          class="trezo-card w-full bg-white dark:bg-[#0c1427] p-[20px] md:p-[25px] rounded-md"
+      >
+        <div
+            class="trezo-card-header bg-gray-50 dark:bg-[#15203c] mb-[20px] md:mb-[25px] flex items-center justify-between -mx-[20px] md:-mx-[25px] -mt-[20px] md:-mt-[25px] p-[20px] md:p-[25px] rounded-t-md"
+        >
+          <div class="trezo-card-title">
+            <h5 class="!mb-0">Add New Task</h5>
+          </div>
+          <div class="trezo-card-subtitle">
+            <button
+                type="button"
+                class="text-[23px] transition-all leading-none text-black dark:text-white hover:text-primary-500"
+                @click="closeNewModal"
+            >
+              <i class="ri-close-fill"></i>
+            </button>
+          </div>
+        </div>
+        <div class="trezo-card-content">
+          <form>
+            <div class="sm:grid sm:grid-cols-2 sm:gap-[25px]">
+              <div class="sm:col-span-2 mb-[20px] sm:mb-0">
+                <label
+                    class="mb-[10px] text-black dark:text-white font-medium block"
+                >
+                  Task Title
+                </label>
+                <input
+                    type="text"
+                    class="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary-500"
+                    placeholder="Task title"
+                />
+              </div>
+              <div class="mb-[20px] sm:mb-0">
+                <label
+                    class="mb-[10px] text-black dark:text-white font-medium block"
+                >
+                  Assigned To
+                </label>
+                <select
+                    class="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[14px] block w-full outline-0 cursor-pointer transition-all focus:border-primary-500"
+                >
+                  <option>Select</option>
+                  <option>Shawn Kennedy</option>
+                  <option>Roberto Cruz</option>
+                  <option>Juli Johnson</option>
+                  <option>Catalina Engles</option>
+                  <option>Louis Nagle</option>
+                  <option>Michael Marquez</option>
+                </select>
+              </div>
+              <div class="mb-[20px] sm:mb-0">
+                <label
+                    class="mb-[10px] text-black dark:text-white font-medium block"
+                >
+                  Due Date
+                </label>
+                <input
+                    type="date"
+                    class="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary-500"
+                />
+              </div>
+              <div class="mb-[20px] sm:mb-0">
+                <label
+                    class="mb-[10px] text-black dark:text-white font-medium block"
+                >
+                  Priority
+                </label>
+                <select
+                    class="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[14px] block w-full outline-0 cursor-pointer transition-all focus:border-primary-500"
+                >
+                  <option>Select</option>
+                  <option>High</option>
+                  <option>Medium</option>
+                  <option>Low</option>
+                </select>
+              </div>
+              <div class="mb-[20px] sm:mb-0">
+                <label
+                    class="mb-[10px] text-black dark:text-white font-medium block"
+                >
+                  Status
+                </label>
+                <select
+                    class="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[14px] block w-full outline-0 cursor-pointer transition-all focus:border-primary-500"
+                >
+                  <option>Select</option>
+                  <option>In Progress</option>
+                  <option>Pending</option>
+                  <option>Completed</option>
+                  <option>Not Started</option>
+                </select>
+              </div>
+            </div>
+            <div class="mt-[20px] md:mt-[25px] ltr:text-right rtl:text-left">
+              <button
+                  type="button"
+                  class="rounded-md inline-block transition-all font-medium ltr:mr-[15px] rtl:ml-[15px] px-[26.5px] py-[12px] bg-danger-500 text-white hover:bg-danger-400"
+                  @click="closeNewModal"
+              >
+                Cancel
+              </button>
+              <button
+                  type="button"
+                  class="inline-block bg-primary-500 text-white py-[12px] px-[26.5px] transition-all rounded-md hover:bg-primary-400"
+              >
+                <span class="inline-block relative ltr:pl-[25px] rtl:pr-[25px]">
+                  <i
+                      class="material-symbols-outlined !text-[20px] absolute ltr:left-0 rtl:right-0 top-1/2 -translate-y-1/2"
+                  >
+                    add
+                  </i>
+                  Create
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <div
       class="trezo-card bg-white dark:bg-[#0c1427] mb-[25px] p-[20px] md:p-[25px] rounded-md"
   >
@@ -58,7 +192,15 @@
       <!-- Loading Overlay -->
       <div v-if="isLoading" class="absolute inset-0 bg-white dark:bg-[#0c1427] bg-opacity-75 dark:bg-opacity-75 flex items-center justify-center z-10 rounded-md">
         <div class="flex flex-col items-center gap-3">
-          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>
+          <!--          <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary-500"></div>-->
+
+          <div role="status">
+            <svg aria-hidden="true" class="inline w-10 h-10 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+              <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+            </svg>
+            <span class="sr-only">Loading...</span>
+          </div>
           <p class="text-sm text-gray-600 dark:text-gray-400">Loading departments...</p>
         </div>
       </div>
@@ -267,6 +409,56 @@
         </div>
       </div>
     </div>
+
+    <!-- Success Toast Notification -->
+    <Transition
+        enter-active-class="transition ease-out duration-300 transform"
+        enter-from-class="translate-y-2 opacity-0"
+        enter-to-class="translate-y-0 opacity-100"
+        leave-active-class="transition ease-in duration-200"
+        leave-from-class="translate-y-0 opacity-100"
+        leave-to-class="translate-y-2 opacity-0"
+    >
+      <div
+          v-if="showToast"
+          class="fixed top-5 right-5 z-[60] max-w-md w-full sm:w-auto"
+      >
+        <div class="bg-white dark:bg-[#0c1427] rounded-lg shadow-2xl border border-success-500 overflow-hidden">
+          <div class="flex items-start p-4 gap-3">
+            <!-- Success Icon -->
+            <div class="flex-shrink-0">
+              <div class="flex items-center justify-center w-10 h-10 rounded-full bg-success-50 dark:bg-success-500/10">
+                <i class="material-symbols-outlined text-success-500 !text-[24px]">check_circle</i>
+              </div>
+            </div>
+
+            <!-- Message Content -->
+            <div class="flex-1 pt-0.5">
+              <h4 class="text-sm font-semibold text-black dark:text-white mb-1">
+                Success!
+              </h4>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                {{ toastMessage }}
+              </p>
+            </div>
+
+            <!-- Close Button -->
+            <button
+                @click="showToast = false"
+                type="button"
+                class="flex-shrink-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+            >
+              <i class="material-symbols-outlined !text-[20px]">close</i>
+            </button>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="h-1 bg-gray-100 dark:bg-[#15203c]">
+            <div class="h-full bg-success-500 animate-toast-progress"></div>
+          </div>
+        </div>
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -303,6 +495,8 @@ const sortOrder = ref<'asc' | 'desc'>('asc');
 const isLoading = ref(false);
 const showDeleteModal = ref(false);
 const departmentToDelete = ref<Department | null>(null);
+const showToast = ref(false);
+const toastMessage = ref('');
 const pagination = reactive<PaginationData>({
   page: 1,
   totalPages: 1,
@@ -419,6 +613,8 @@ const cancelDelete = () => {
 const deleteDepartment = async () => {
   if (!departmentToDelete.value) return;
 
+  const deletedDepartmentName = departmentToDelete.value.name_en;
+
   // const token = localStorage.getItem('token')
   try {
     await axios.delete(`${import.meta.env.VITE_API_URL}/departments/${departmentToDelete.value._id}`, {
@@ -430,6 +626,15 @@ const deleteDepartment = async () => {
     // Close modal
     showDeleteModal.value = false;
     departmentToDelete.value = null;
+
+    // Show success toast
+    toastMessage.value = `Department "${deletedDepartmentName}" has been deleted successfully.`;
+    showToast.value = true;
+
+    // Auto-hide toast after 4 seconds
+    setTimeout(() => {
+      showToast.value = false;
+    }, 4000);
 
     // Refresh the list
     await fetchDepartments();
@@ -457,3 +662,18 @@ onMounted(() => {
   fetchDepartments();
 });
 </script>
+
+<style scoped>
+@keyframes toast-progress {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+.animate-toast-progress {
+  animation: toast-progress 4s linear forwards;
+}
+</style>

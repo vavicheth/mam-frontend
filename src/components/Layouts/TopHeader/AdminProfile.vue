@@ -61,83 +61,11 @@
               </RouterLink>
             </MenuItem>
           </li>
-          <li>
-            <RouterLink
-              to="/apps/chat"
-              class="block relative py-[7px] ltr:pl-[50px] ltr:pr-[20px] rtl:pr-[50px] rtl:pl-[20px] text-black dark:text-white transition-all hover:text-primary-500"
-              exact
-            >
-              <i
-                class="material-symbols-outlined top-1/2 -translate-y-1/2 !text-[22px] absolute ltr:left-[20px] rtl:right-[20px]"
-              >
-                chat
-              </i>
-              Messages
-            </RouterLink>
-          </li>
-          <li>
-            <RouterLink
-              to="/apps/to-do-list"
-              class="block relative py-[7px] ltr:pl-[50px] ltr:pr-[20px] rtl:pr-[50px] rtl:pl-[20px] text-black dark:text-white transition-all hover:text-primary-500"
-              exact
-            >
-              <i
-                class="material-symbols-outlined top-1/2 -translate-y-1/2 !text-[22px] absolute ltr:left-[20px] rtl:right-[20px]"
-              >
-                format_list_bulleted
-              </i>
-              My Task
-            </RouterLink>
-          </li>
-          <li>
-            <RouterLink
-              to="/ecommerce/checkout"
-              class="block relative py-[7px] ltr:pl-[50px] ltr:pr-[20px] rtl:pr-[50px] rtl:pl-[20px] text-black dark:text-white transition-all hover:text-primary-500"
-              exact
-            >
-              <i
-                class="material-symbols-outlined top-1/2 -translate-y-1/2 !text-[22px] absolute ltr:left-[20px] rtl:right-[20px]"
-              >
-                credit_card
-              </i>
-              Billing
-            </RouterLink>
-          </li>
+
         </ul>
 
-        <div
-          class="border-t border-gray-100 dark:border-[#172036] mx-[20px] my-[9px]"
-        ></div>
 
         <ul>
-          <li>
-            <RouterLink
-              to="/social/settings"
-              class="block relative py-[7px] ltr:pl-[50px] ltr:pr-[20px] rtl:pr-[50px] rtl:pl-[20px] text-black dark:text-white transition-all hover:text-primary-500"
-              exact
-            >
-              <i
-                class="material-symbols-outlined top-1/2 -translate-y-1/2 !text-[22px] absolute ltr:left-[20px] rtl:right-[20px]"
-              >
-                settings
-              </i>
-              Settings
-            </RouterLink>
-          </li>
-          <li>
-            <RouterLink
-              to="/faq"
-              class="block relative py-[7px] ltr:pl-[50px] ltr:pr-[20px] rtl:pr-[50px] rtl:pl-[20px] text-black dark:text-white transition-all hover:text-primary-500"
-              exact
-            >
-              <i
-                class="material-symbols-outlined top-1/2 -translate-y-1/2 !text-[22px] absolute ltr:left-[20px] rtl:right-[20px]"
-              >
-                support
-              </i>
-              Support
-            </RouterLink>
-          </li>
           <li>
             <RouterLink
               to="/authentication/lock-screen"

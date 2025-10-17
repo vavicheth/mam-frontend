@@ -1,5 +1,145 @@
 <template>
   <PageTitle pageTitle="Departments List" subTitle="Departments" />
+
+  <!-- Add New Department Popup -->
+  <div
+      :class="[
+      'add-new-popup z-[999] fixed transition-all inset-0 overflow-x-hidden overflow-y-auto lg:py-[20px]',
+      { active: showNewModal },
+    ]"
+  >
+    <div
+        class="popup-dialog flex transition-all max-w-[550px] min-h-full items-center mx-auto"
+    >
+      <div
+          class="trezo-card w-full bg-white dark:bg-[#0c1427] p-[20px] md:p-[25px] rounded-md"
+      >
+        <div
+            class="trezo-card-header bg-gray-50 dark:bg-[#15203c] mb-[20px] md:mb-[25px] flex items-center justify-between -mx-[20px] md:-mx-[25px] -mt-[20px] md:-mt-[25px] p-[20px] md:p-[25px] rounded-t-md"
+        >
+          <div class="trezo-card-title">
+            <h5 class="!mb-0">Add New Department</h5>
+          </div>
+          <div class="trezo-card-subtitle">
+            <button
+                type="button"
+                class="text-[23px] transition-all leading-none text-black dark:text-white hover:text-primary-500"
+                @click="closeNewModal"
+            >
+              <i class="ri-close-fill"></i>
+            </button>
+          </div>
+        </div>
+        <div class="trezo-card-content">
+          <form>
+            <div class="sm:grid sm:grid-cols-2 sm:gap-[25px]">
+              <div class="sm:col-span-2 mb-[20px] sm:mb-0">
+                <label
+                    class="mb-[10px] text-black dark:text-white font-medium block"
+                >
+                  Name Khmer <span class="text-danger-500">*</span>
+                </label>
+                <input
+                    v-model="formData.name_kh"
+                    type="text"
+                    :class="[
+                      'h-[55px] rounded-md text-black dark:text-white border bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400',
+                      formErrors.name_kh ? 'border-danger-500 focus:border-danger-500' : 'border-gray-200 dark:border-[#172036] focus:border-primary-500'
+                    ]"
+                    placeholder="Name department in Khmer"
+                />
+                <p v-if="formErrors.name_kh" class="text-danger-500 text-sm mt-1">{{ formErrors.name_kh }}</p>
+              </div>
+              <div class="sm:col-span-2 mb-[20px] sm:mb-0">
+                <label
+                    class="mb-[10px] text-black dark:text-white font-medium block"
+                >
+                  Name English <span class="text-danger-500">*</span>
+                </label>
+                <input
+                    v-model="formData.name_en"
+                    type="text"
+                    :class="[
+                      'h-[55px] rounded-md text-black dark:text-white border bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400',
+                      formErrors.name_en ? 'border-danger-500 focus:border-danger-500' : 'border-gray-200 dark:border-[#172036] focus:border-primary-500'
+                    ]"
+                    placeholder="Name department in English"
+                />
+                <p v-if="formErrors.name_en" class="text-danger-500 text-sm mt-1">{{ formErrors.name_en }}</p>
+              </div>
+              <div class="sm:col-span-2 mb-[20px] sm:mb-0">
+                <label
+                    class="mb-[10px] text-black dark:text-white font-medium block"
+                >
+                  Description
+                </label>
+                <textarea
+                    v-model="formData.description"
+                    class="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary-500"
+                    placeholder="Enter department description"
+                />
+              </div>
+
+              <div class="mb-[20px] sm:mb-0">
+                <label class="block text-sm font-medium text-black dark:text-white mb-2">
+                  Status <span class="text-danger-500">*</span>
+                </label>
+                <div class="flex items-center gap-4">
+                  <label class="flex items-center gap-2 cursor-pointer">
+                    <input
+                        v-model="formData.active"
+                        type="radio"
+                        :value="true"
+                        class="w-4 h-4 text-primary-500 focus:ring-primary-500 focus:ring-2"
+                    />
+                    <span class="text-sm text-black dark:text-white">Active</span>
+                  </label>
+                  <label class="flex items-center gap-2 cursor-pointer">
+                    <input
+                        v-model="formData.active"
+                        type="radio"
+                        :value="false"
+                        class="w-4 h-4 text-primary-500 focus:ring-primary-500 focus:ring-2"
+                    />
+                    <span class="text-sm text-black dark:text-white">Inactive</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="mt-[20px] md:mt-[25px] ltr:text-right rtl:text-left">
+              <button
+                  type="button"
+                  class="rounded-md inline-block transition-all font-medium ltr:mr-[15px] rtl:ml-[15px] px-[26.5px] py-[12px] bg-danger-500 text-white hover:bg-danger-400"
+                  @click="closeNewModal"
+              >
+                Cancel
+              </button>
+              <button
+                  type="button"
+                  @click="createDepartment"
+                  :disabled="isCreating"
+                  class="inline-block bg-primary-500 text-white py-[12px] px-[26.5px] transition-all rounded-md hover:bg-primary-400 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <span v-if="!isCreating" class="inline-block relative ltr:pl-[25px] rtl:pr-[25px]">
+                  <i
+                      class="material-symbols-outlined !text-[20px] absolute ltr:left-0 rtl:right-0 top-1/2 -translate-y-1/2"
+                  >
+                    add
+                  </i>
+                  Create
+                </span>
+                <span v-else class="inline-block">
+                  Creating...
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <div
       class="trezo-card bg-white dark:bg-[#0c1427] mb-[25px] p-[20px] md:p-[25px] rounded-md"
   >
@@ -38,8 +178,8 @@
       </div>
 
       <div class="trezo-card-subtitle mt-[15px] sm:mt-0">
-        <RouterLink
-            to="/events/create-an-event"
+        <button
+            @click="openNewModal"
             class="inline-block transition-all rounded-md font-medium px-[13px] py-[6px] text-primary-500 border border-primary-500 hover:bg-primary-500 hover:text-white"
         >
           <span class="inline-block relative ltr:pl-[22px] rtl:pr-[22px]">
@@ -50,7 +190,7 @@
             </i>
             Add New Department
           </span>
-        </RouterLink>
+        </button>
       </div>
     </div>
 
@@ -189,22 +329,22 @@
                 class="ltr:text-left rtl:text-right whitespace-nowrap px-[20px] py-[15px] border-b border-gray-100 dark:border-[#172036] ltr:first:border-l ltr:last:border-r rtl:first:border-r rtl:last:border-l"
             >
               <div class="flex items-center gap-[9px]">
-                <button
-                    type="button"
+                <RouterLink
+                    :to="`/departments/${department._id}`"
                     class="text-primary-500 leading-none custom-tooltip"
                     v-tooltip="'View'"
                 >
                   <i class="material-symbols-outlined !text-md">
                     visibility
                   </i>
-                </button>
-                <button
-                    type="button"
-                    class="text-gray-500 dark:text-gray-400 leading-none custom-tooltip"
+                </RouterLink>
+                <RouterLink
+                    :to="`/departments/${department._id}/edit`"
+                    class="text-gray-500 dark:text-gray-400 leading-none custom-tooltip hover:text-primary-500 transition-colors"
                     v-tooltip="'Edit'"
                 >
                   <i class="material-symbols-outlined !text-md"> edit </i>
-                </button>
+                </RouterLink>
                 <button
                     type="button"
                     @click="confirmDelete(department)"
@@ -343,6 +483,8 @@ interface Department {
   active: boolean;
 }
 
+
+
 interface PaginationData {
   page: number;
   totalPages: number;
@@ -369,6 +511,103 @@ const pagination = reactive<PaginationData>({
   hasNextPage: false,
   hasPrevPage: false
 });
+
+// Form data for new department
+const formData = ref({
+  name_kh: '',
+  name_en: '',
+  description: '',
+  active: true
+});
+
+//Add new modal
+const showNewModal = ref(false);
+const isCreating = ref(false);
+const formErrors = ref({
+  name_kh: '',
+  name_en: ''
+});
+
+const resetForm = () => {
+  formData.value = {
+    name_kh: '',
+    name_en: '',
+    description: '',
+    active: true
+  };
+  formErrors.value = {
+    name_kh: '',
+    name_en: ''
+  };
+};
+
+const openNewModal = () => {
+  resetForm();
+  showNewModal.value = true;
+}
+
+const closeNewModal = () => {
+  showNewModal.value = false;
+  resetForm();
+}
+
+const validateForm = (): boolean => {
+  let isValid = true;
+  formErrors.value = {
+    name_kh: '',
+    name_en: ''
+  };
+
+  if (!formData.value.name_kh.trim()) {
+    formErrors.value.name_kh = 'Name in Khmer is required';
+    isValid = false;
+  }
+
+  if (!formData.value.name_en.trim()) {
+    formErrors.value.name_en = 'Name in English is required';
+    isValid = false;
+  }
+
+  return isValid;
+};
+
+const createDepartment = async () => {
+  if (!validateForm()) {
+    return;
+  }
+
+  isCreating.value = true;
+
+  try {
+    await axios.post(`${import.meta.env.VITE_API_URL}/departments`, {
+      name_kh: formData.value.name_kh.trim(),
+      name_en: formData.value.name_en.trim(),
+      description: formData.value.description.trim(),
+      active: formData.value.active
+    });
+
+    // Close modal
+    closeNewModal();
+
+    // Show success toast
+    toastMessage.value = `Department "${formData.value.name_en}" has been created successfully.`;
+    showToast.value = true;
+
+    // Auto-hide toast after 4 seconds
+    setTimeout(() => {
+      showToast.value = false;
+    }, 4000);
+
+    // Refresh the list
+    await fetchDepartments();
+  } catch (error: any) {
+    console.error('Failed to create department:', error);
+    const errorMsg = error.response?.data?.message || 'Failed to create department. Please try again.';
+    alert(errorMsg);
+  } finally {
+    isCreating.value = false;
+  }
+};
 
 // Computed properties
 const displayedItemsRange = computed(() => {
