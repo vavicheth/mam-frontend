@@ -7,11 +7,11 @@
       class="flex items-center -mx-[5px] relative ltr:pr-[14px] rtl:pl-[14px] text-black dark:text-whit"
     >
       <img
-        src="@/assets/images/admin.png"
+        :src="displayAvatar"
         class="w-[35px] h-[35px] md:w-[42px] md:h-[42px] rounded-full ltr:md:mr-[2px] ltr:lg:mr-[8px] rtl:md:ml-[2px] rtl:lg:ml-[8px] border-[2px] border-primary-200 inline-block"
         alt="admin-image"
       />
-      <span class="block font-semibold text-[0px] lg:text-base"> Olivia </span>
+      <span class="block font-semibold text-[0px] lg:text-base"> {{ displayName.split(' ')[0] }} </span>
       <i
         class="ri-arrow-down-s-line text-[15px] absolute ltr:-right-[3px] rtl:-left-[3px] top-1/2 -translate-y-1/2 mt-px"
       ></i>
@@ -32,15 +32,15 @@
           class="flex items-center border-b border-gray-100 dark:border-[#172036] pb-[12px] mx-[20px] mb-[10px]"
         >
           <img
-            src="@/assets/images/admin.png"
+            :src="displayAvatar"
             class="rounded-full w-[31px] h-[31px] ltr:mr-[9px] rtl:ml-[9px] border-2 border-primary-200 inline-block"
             alt="admin-image"
           />
           <div>
             <span class="block text-black dark:text-white font-medium">
-              Olivia John
+              {{ displayName }}
             </span>
-            <span class="block text-xs"> Marketing Manager </span>
+            <span class="block text-xs"> {{ displayRole }} </span>
           </div>
         </div>
 
@@ -100,17 +100,50 @@
   </Menu>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
+<script setup lang="ts">
+import { computed } from "vue";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
+import defaultAvatar from "@/assets/images/admin.png";
 
-export default defineComponent({
-  name: "AdminProfile",
-  components: {
-    Menu,
-    MenuButton,
-    MenuItems,
-    MenuItem,
-  },
+interface User {
+  id?: number;
+  name?: string;
+  email?: string;
+  role?: string;
+  avatar?: string;
+  firstName?: string;
+  lastName?: string;
+}
+
+interface Props {
+  user?: User;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  user: () => ({
+    name: "Olivia John",
+    role: "Marketing Manager",
+  }),
+});
+
+const displayName = computed((): string => {
+  if (props.user?.name) {
+    return props.user.name;
+  }
+  if (props.user?.firstName && props.user?.lastName) {
+    return `${props.user.firstName} ${props.user.lastName}`;
+  }
+  if (props.user?.firstName) {
+    return props.user.firstName;
+  }
+  return "User";
+});
+
+const displayRole = computed((): string => {
+  return props.user?.role || "User";
+});
+
+const displayAvatar = computed((): string => {
+  return props.user?.avatar || defaultAvatar;
 });
 </script>

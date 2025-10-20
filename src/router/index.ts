@@ -33,6 +33,10 @@ import DepartmentViewPage from "@/pages/Departments/DepartmentViewPage.vue";
 import DepartmentEditPage from "@/pages/Departments/DepartmentEditPage.vue";
 import StaffViewPage from "@/pages/Staff/StaffViewPage.vue";
 import StaffEditPage from "@/pages/Staff/StaffEditPage.vue";
+import EventsEditPage from "@/pages/Events/EventsEditPage.vue";
+import EventsViewPage from "@/pages/Events/EventsViewPage.vue";
+import UsersViewPage from "@/pages/Users/UsersViewPage.vue";
+import UsersEditPage from "@/pages/Users/UsersEditPage.vue";
 
 const routes = [
   {
@@ -54,6 +58,16 @@ const routes = [
     path: "/events",
     name: "Events",
     component: EventsListPage,
+  },
+  {
+    path: "/events/:eventId",
+    name: "EventsViewPage",
+    component: EventsViewPage,
+  },
+  {
+    path: "/events/:eventId/edit",
+    name: "EventsEditPage",
+    component: EventsEditPage,
   },
   {
     path: "/staff",
@@ -90,6 +104,16 @@ const routes = [
     path: "/users",
     name: "UserListPage",
     component: UsersListPage,
+  },
+  {
+    path: "/users/:userId",
+    name: "UserViewPage",
+    component: UsersViewPage,
+  },
+  {
+    path: "/users/:userId/edit",
+    name: "UserEditPage",
+    component: UsersEditPage,
   },
 
 
@@ -182,7 +206,7 @@ router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !token) {
     next('/login');
   } else if (to.meta.requiresGuest && token) {
-    next('/dashboard');
+    next('/');
   } else if (isLocked && to.path !== '/lock') {
     next('/lock-screen');
   } else {

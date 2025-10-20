@@ -1,5 +1,5 @@
 <template>
-  <PageTitle pageTitle="Staff Details" subTitle="Staff" />
+  <PageTitle pageTitle="User Details" subTitle="Users" />
 
   <!-- Loading State -->
   <div v-if="isLoading" class="trezo-card bg-white dark:bg-[#0c1427] mb-[25px] p-[20px] md:p-[25px] rounded-md">
@@ -11,7 +11,7 @@
         </svg>
         <span class="sr-only">Loading...</span>
       </div>
-      <p class="text-sm text-gray-600 dark:text-gray-400 mt-4">Loading staff details...</p>
+      <p class="text-sm text-gray-600 dark:text-gray-400 mt-4">Loading user details...</p>
     </div>
   </div>
 
@@ -22,21 +22,21 @@
         <i class="material-symbols-outlined text-danger-500 !text-[32px]">error</i>
       </div>
       <h3 class="text-lg font-semibold text-black dark:text-white mb-2">
-        Error Loading Staff
+        Error Loading User
       </h3>
       <p class="text-sm text-gray-600 dark:text-gray-400 mb-6 text-center">
         {{ error }}
       </p>
       <div class="flex gap-3">
         <button
-          @click="fetchStaff"
+          @click="fetchUser"
           type="button"
           class="px-4 py-2 text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 rounded-md transition-colors"
         >
           Try Again
         </button>
         <RouterLink
-          to="/staff"
+          to="/users"
           class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-[#15203c] hover:bg-gray-200 dark:hover:bg-[#1a2744] rounded-md transition-colors"
         >
           Back to List
@@ -45,88 +45,147 @@
     </div>
   </div>
 
-  <!-- Staff Details -->
-  <div v-else-if="staff" class="space-y-[25px]">
+  <!-- User Details -->
+  <div v-else-if="user" class="space-y-[25px]">
     <!-- Header Card with Actions -->
     <div class="trezo-card bg-white dark:bg-[#0c1427] p-[20px] md:p-[25px] rounded-md">
       <!-- Action Buttons -->
       <div class="flex items-center gap-3 pb-4 mb-4 border-b border-gray-100 dark:border-[#172036]">
         <RouterLink
-          to="/staff"
+          to="/users"
           class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-[#15203c] hover:bg-gray-200 dark:hover:bg-[#1a2744] rounded-md transition-colors"
         >
           <i class="material-symbols-outlined !text-[18px]">arrow_back</i>
           Back to List
         </RouterLink>
         <RouterLink
-          :to="`/staff/${staff._id}/edit`"
+          :to="`/users/${user._id}/edit`"
           class="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-primary-500 border border-primary-500 hover:bg-primary-500 hover:text-white rounded-md transition-colors"
         >
           <i class="material-symbols-outlined !text-[18px]">edit</i>
-          Edit Staff
+          Edit User
         </RouterLink>
       </div>
 
-      <!-- Staff Header -->
+      <!-- User Header -->
       <div class="flex items-start justify-between mb-6">
-        <div>
-          <h2 class="text-2xl font-bold text-black dark:text-white mb-1">
-            {{ staff.name_en }}
-          </h2>
-          <p class="text-xl text-gray-600 dark:text-gray-400 mb-2">
-            {{ staff.name_kh }}
-          </p>
-          <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
-            <span class="flex items-center gap-1">
-              <i class="material-symbols-outlined !text-[18px]">work</i>
-              {{ staff.position }}
-            </span>
-            <span class="flex items-center gap-1 capitalize">
-              <i class="material-symbols-outlined !text-[18px]">person</i>
-              {{ staff.gender }}
-            </span>
+        <div class="flex items-center gap-4">
+          <!-- Avatar -->
+          <div v-if="user.avatar" class="flex-shrink-0">
+            <img
+              :src="user.avatar"
+              alt="Avatar"
+              class="w-20 h-20 rounded-full object-cover border-2 border-gray-200 dark:border-[#172036]"
+            />
+          </div>
+          <div v-else class="flex-shrink-0">
+            <div class="w-20 h-20 rounded-full bg-primary-500 flex items-center justify-center text-white font-bold text-3xl border-2 border-gray-200 dark:border-[#172036]">
+              {{ user.name.charAt(0).toUpperCase() }}
+            </div>
+          </div>
+
+          <!-- User Info -->
+          <div>
+            <h2 class="text-2xl font-bold text-black dark:text-white mb-1">
+              {{ user.name }}
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 mb-2">
+              @{{ user.username }}
+            </p>
+            <div class="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
+              <span class="flex items-center gap-1">
+                <i class="material-symbols-outlined !text-[18px]">email</i>
+                {{ user.email }}
+              </span>
+            </div>
           </div>
         </div>
-        <div>
+
+        <div class="flex flex-col gap-2 items-end">
           <span
-            :class="staff.active
+            :class="user.active
               ? 'px-[12px] py-[6px] inline-block bg-success-50 dark:bg-[#15203c] text-success-500 rounded-md font-medium text-sm'
               : 'px-[12px] py-[6px] inline-block bg-danger-50 dark:bg-[#15203c] text-danger-500 rounded-md font-medium text-sm'"
           >
-            {{ staff.active ? 'Active' : 'Inactive' }}
+            {{ user.active ? 'Active' : 'Inactive' }}
+          </span>
+          <span :class="getRoleBadgeClass(user.role)" class="px-[12px] py-[6px] inline-block rounded-md font-medium text-sm capitalize">
+            {{ user.role }}
           </span>
         </div>
       </div>
 
-      <!-- Staff Information Grid -->
+      <!-- User Information Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Date of Birth -->
+        <!-- Full Name -->
         <div class="space-y-1">
           <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-            Date of Birth
+            Full Name
           </label>
           <p class="text-base text-black dark:text-white bg-gray-50 dark:bg-[#15203c] px-4 py-3 rounded-md">
-            {{ formatDate(staff.dob) }}
+            {{ user.name }}
           </p>
         </div>
 
-        <!-- Age -->
+        <!-- Username -->
         <div class="space-y-1">
           <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-            Age
+            Username
           </label>
           <p class="text-base text-black dark:text-white bg-gray-50 dark:bg-[#15203c] px-4 py-3 rounded-md">
-            {{ calculateAge(staff.dob) }} years old
+            {{ user.username }}
           </p>
         </div>
 
-        <!-- Gender -->
+        <!-- Email -->
         <div class="space-y-1">
           <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-            Gender
+            Email Address
+          </label>
+          <p class="text-base text-black dark:text-white bg-gray-50 dark:bg-[#15203c] px-4 py-3 rounded-md">
+            {{ user.email }}
+          </p>
+        </div>
+
+        <!-- Role -->
+        <div class="space-y-1">
+          <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+            Role
           </label>
           <p class="text-base text-black dark:text-white bg-gray-50 dark:bg-[#15203c] px-4 py-3 rounded-md capitalize">
-            {{ staff.gender }}
+            {{ user.role }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Staff Information (if applicable) -->
+    <div v-if="user.staff" class="trezo-card bg-white dark:bg-[#0c1427] p-[20px] md:p-[25px] rounded-md">
+      <h4 class="text-lg font-semibold text-black dark:text-white mb-4 pb-3 border-b border-gray-100 dark:border-[#172036]">
+        Associated Staff Information
+      </h4>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Staff Name (English) -->
+        <div class="space-y-1">
+          <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+            Staff Name (English)
+          </label>
+          <RouterLink
+            :to="`/staff/${staff._id}`"
+            class="block text-base text-primary-500 hover:text-primary-600 bg-gray-50 dark:bg-[#15203c] px-4 py-3 rounded-md transition-colors"
+          >
+            {{ staff.name_en }}
+          </RouterLink>
+        </div>
+
+        <!-- Staff Name (Khmer) -->
+        <div class="space-y-1">
+          <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+            Staff Name (Khmer)
+          </label>
+          <p class="text-base text-black dark:text-white bg-gray-50 dark:bg-[#15203c] px-4 py-3 rounded-md">
+            {{ staff.name_kh }}
           </p>
         </div>
 
@@ -140,55 +199,23 @@
           </p>
         </div>
 
-        <!-- Description (Full Width) -->
+        <!-- Gender -->
+        <div class="space-y-1">
+          <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+            Gender
+          </label>
+          <p class="text-base text-black dark:text-white bg-gray-50 dark:bg-[#15203c] px-4 py-3 rounded-md capitalize">
+            {{ staff.gender }}
+          </p>
+        </div>
+
+        <!-- Staff Description (Full Width) -->
         <div class="space-y-1 md:col-span-2">
           <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-            Description
+            Staff Description
           </label>
           <p class="text-sm text-black dark:text-white leading-relaxed bg-gray-50 dark:bg-[#15203c] px-4 py-3 rounded-md">
             {{ staff.description || 'No description available' }}
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Department Information (if applicable) -->
-    <div v-if="staff.department" class="trezo-card bg-white dark:bg-[#0c1427] p-[20px] md:p-[25px] rounded-md">
-      <h4 class="text-lg font-semibold text-black dark:text-white mb-4 pb-3 border-b border-gray-100 dark:border-[#172036]">
-        Department Information
-      </h4>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Department Name (English) -->
-        <div class="space-y-1">
-          <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-            Department Name (English)
-          </label>
-          <RouterLink
-            :to="`/departments/${department._id}`"
-            class="block text-base text-primary-500 hover:text-primary-600 bg-gray-50 dark:bg-[#15203c] px-4 py-3 rounded-md transition-colors"
-          >
-            {{ department.name_en }}
-          </RouterLink>
-        </div>
-
-        <!-- Department Name (Khmer) -->
-        <div class="space-y-1">
-          <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-            Department Name (Khmer)
-          </label>
-          <p class="text-base text-black dark:text-white bg-gray-50 dark:bg-[#15203c] px-4 py-3 rounded-md">
-            {{ department.name_kh }}
-          </p>
-        </div>
-
-        <!-- Department Description (Full Width) -->
-        <div class="space-y-1 md:col-span-2">
-          <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
-            Department Description
-          </label>
-          <p class="text-sm text-black dark:text-white leading-relaxed bg-gray-50 dark:bg-[#15203c] px-4 py-3 rounded-md">
-            {{ department.description || 'No description available' }}
           </p>
         </div>
       </div>
@@ -207,7 +234,7 @@
 <!--            Created Date-->
 <!--          </label>-->
 <!--          <p class="text-sm text-black dark:text-white bg-gray-50 dark:bg-[#15203c] px-4 py-3 rounded-md">-->
-<!--            {{ formatDateTime(staff.createdAt) }}-->
+<!--            {{ formatDateTime(user.createdAt) }}-->
 <!--          </p>-->
 <!--        </div>-->
 
@@ -217,7 +244,7 @@
 <!--            Last Updated-->
 <!--          </label>-->
 <!--          <p class="text-sm text-black dark:text-white bg-gray-50 dark:bg-[#15203c] px-4 py-3 rounded-md">-->
-<!--            {{ formatDateTime(staff.updatedAt) }}-->
+<!--            {{ formatDateTime(user.updatedAt) }}-->
 <!--          </p>-->
 <!--        </div>-->
 <!--      </div>-->
@@ -232,23 +259,25 @@ import PageTitle from "@/components/Common/PageTitle.vue";
 import axios from 'axios';
 
 // Types
-interface Department {
-  _id: string;
-  name_kh: string;
-  name_en: string;
-  description: string;
-}
-
 interface Staff {
   _id: string;
   name_kh: string;
   name_en: string;
-  dob: string;
   gender: 'male' | 'female';
   position: string;
   description: string;
   active: boolean;
-  department?: Department;
+}
+
+interface User {
+  _id: string;
+  name: string;
+  username: string;
+  email: string;
+  role: 'admin' | 'user' | 'manager';
+  avatar?: string;
+  staff?: Staff;
+  active: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -257,22 +286,12 @@ interface Staff {
 const route = useRoute();
 
 // State
+const user = ref<User | null>(null);
 const staff = ref<Staff | null>(null);
-const department = ref<Department | null>(null);
 const isLoading = ref(false);
 const error = ref<string | null>(null);
 
 // Helper Functions
-const formatDate = (dateString: string) => {
-  if (!dateString) return 'N/A';
-  const date = new Date(dateString);
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
-};
-
 const formatDateTime = (dateString: string) => {
   if (!dateString) return 'N/A';
   const date = new Date(dateString);
@@ -285,39 +304,73 @@ const formatDateTime = (dateString: string) => {
   });
 };
 
-const calculateAge = (dob: string) => {
-  if (!dob) return 'N/A';
-  const birthDate = new Date(dob);
-  const today = new Date();
-  let age = today.getFullYear() - birthDate.getFullYear();
-  const monthDiff = today.getMonth() - birthDate.getMonth();
-
-  if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
-    age--;
+const getRoleBadgeClass = (role: string): string => {
+  switch (role) {
+    case 'admin':
+      return 'bg-danger-50 dark:bg-[#15203c] text-danger-500';
+    case 'manager':
+      return 'bg-warning-50 dark:bg-[#15203c] text-warning-500';
+    case 'user':
+      return 'bg-primary-50 dark:bg-[#15203c] text-primary-500';
+    default:
+      return 'bg-gray-50 dark:bg-[#15203c] text-gray-500';
   }
-
-  return age;
 };
 
 // Methods
+const fetchUser = async () => {
+  const userId = route.params.userId as string;
+
+  if (!userId) {
+    error.value = 'User ID is missing';
+    return;
+  }
+
+  isLoading.value = true;
+  error.value = null;
+
+  try {
+    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/users/${userId}`,
+        // headers: {
+        //   Authorization: `Bearer ${token}`
+        // }
+    );
+    user.value = data;
+  } catch (err: any) {
+    console.error('Failed to fetch user:', err);
+    if (err.response?.status === 404) {
+      error.value = 'User not found';
+    } else if (err.response?.status === 400) {
+      error.value = 'Invalid user ID';
+    } else {
+      error.value = 'Failed to load user details. Please try again later.';
+    }
+  } finally {
+    const staff_id = user.value;
+    if (staff_id.staff) {
+      await fetchStaff();
+    }
+    isLoading.value = false;
+  }
+};
+
 const fetchStaff = async () => {
-  const staffId = route.params.staffId as string;
+  const staffId = user.value;
 
   if (!staffId) {
     error.value = 'Staff ID is missing';
     return;
   }
 
-
   isLoading.value = true;
   error.value = null;
 
   try {
-    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/staff/${staffId}`, {
-      // headers: {
-      //   Authorization: `Bearer ${token}`
-      // }
-    });
+    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/staff/${staffId.staff}`,
+        // headers: {
+        //   Authorization: `Bearer ${token}`
+        // }
+    );
     staff.value = data;
   } catch (err: any) {
     console.error('Failed to fetch staff:', err);
@@ -329,50 +382,13 @@ const fetchStaff = async () => {
       error.value = 'Failed to load staff details. Please try again later.';
     }
   } finally {
-    const dept = staff.value;
-    if (dept.department) {
-      await fetchDepartment();
-    }
-    isLoading.value = false;
-  }
-};
-
-const fetchDepartment = async () => {
-  const departmentId = staff.value;
-
-  if (!departmentId) {
-    error.value = 'Department ID is missing';
-    return;
-  }
-
-  isLoading.value = true;
-  error.value = null;
-
-  try {
-    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/departments/${departmentId.department}`, {
-      // headers: {
-      //   Authorization: `Bearer ${token}`
-      // }
-    });
-
-    department.value = data;
-  } catch (err: any) {
-    console.error('Failed to fetch department:', err);
-    if (err.response?.status === 404) {
-      error.value = 'Department not found';
-    } else if (err.response?.status === 400) {
-      error.value = 'Invalid department ID';
-    } else {
-      error.value = 'Failed to load department details. Please try again later.';
-    }
-  } finally {
-    isLoading.value = false;
+    // isLoading.value = false;
   }
 };
 
 // Lifecycle
 onMounted(() => {
-  fetchStaff();
+  fetchUser();
 });
 </script>
 

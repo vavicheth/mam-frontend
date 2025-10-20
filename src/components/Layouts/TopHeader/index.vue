@@ -40,7 +40,7 @@
 
 <!--        <NotificationsLists />-->
 
-        <AdminProfile />
+        <AdminProfile :user="loggedInUser" />
 
         <div
           class="relative settings-menu mx-[8px] md:mx-[10px] lg:mx-[12px] ltr:first:ml-0 ltr:last:mr-0 rtl:first:mr-0 rtl:last:ml-0"
@@ -80,17 +80,29 @@ export default defineComponent({
   setup() {
     const stateStoreInstance = stateStore;
     const isSticky = ref(false);
+    const loggedInUser = ref<any>(null);
 
     onMounted(() => {
       window.addEventListener("scroll", () => {
         let scrollPos = window.scrollY;
         isSticky.value = scrollPos >= 100;
       });
+
+      // Get user data from localStorage
+      const userDataString = localStorage.getItem('user');
+      if (userDataString) {
+        try {
+          loggedInUser.value = JSON.parse(userDataString);
+        } catch (error) {
+          console.error('Error parsing user data from localStorage:', error);
+        }
+      }
     });
 
     return {
       isSticky,
       stateStoreInstance,
+      loggedInUser,
     };
   },
 });
