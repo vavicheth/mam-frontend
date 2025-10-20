@@ -32,6 +32,7 @@ import DepartmentsListPage from "@/pages/Departments/DepartmentsListPage.vue";
 import DepartmentViewPage from "@/pages/Departments/DepartmentViewPage.vue";
 import DepartmentEditPage from "@/pages/Departments/DepartmentEditPage.vue";
 import StaffViewPage from "@/pages/Staff/StaffViewPage.vue";
+import StaffEditPage from "@/pages/Staff/StaffEditPage.vue";
 
 const routes = [
   {
@@ -63,6 +64,11 @@ const routes = [
     path: "/staff/:staffId",
     name: "StaffViewPage",
     component: StaffViewPage,
+  },
+  {
+    path: "/staff/:staffId/edit",
+    name: "StaffEditPage",
+    component: StaffEditPage,
   },
   {
     path: "/departments",

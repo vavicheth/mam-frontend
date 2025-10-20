@@ -47,6 +47,17 @@
 
   <!-- Edit Form -->
   <div v-else-if="formData" class="trezo-card bg-white dark:bg-[#0c1427] mb-[25px] p-[20px] md:p-[25px] rounded-md">
+
+    <div class="flex items-center gap-3 pb-4 border-b border-gray-100 dark:border-[#172036]">
+      <RouterLink
+          to="/departments"
+          class="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 bg-gray-100 dark:bg-[#15203c] hover:bg-gray-200 dark:hover:bg-[#1a2744] rounded-md transition-colors"
+      >
+        <i class="material-symbols-outlined !text-[18px]">arrow_back</i>
+        Back to List
+      </RouterLink>
+    </div>
+
     <div class="mb-6 pb-4 border-b border-gray-100 dark:border-[#172036]">
       <h2 class="text-xl font-semibold text-black dark:text-white mb-1">
         Edit Department Information
@@ -168,13 +179,6 @@
           >
             <i class="material-symbols-outlined !text-[18px]">cancel</i>
             Cancel
-          </RouterLink>
-          <RouterLink
-            to="/departments"
-            class="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors"
-          >
-            <i class="material-symbols-outlined !text-[18px]">arrow_back</i>
-            Back to List
           </RouterLink>
         </div>
       </div>
