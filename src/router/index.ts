@@ -1,29 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-
 import EventsListPage from "../pages/Events/EventsListPage.vue";
-
-import SettingsPage from "../pages/Social/SettingsPage.vue";
-
-import TeamMembersPage from "../pages/Users/TeamMembersPage.vue";
 import UsersListPage from "../pages/Users/UsersListPage.vue";
-import AddUserPage from "../pages/Users/AddUserPage.vue";
 import UserProfilePage from "../pages/Profile/UserProfilePage.vue";
-import UserTeamPage from "../pages/Profile/UserTeamPage.vue";
-import UserProjectsPage from "../pages/Profile/UserProjectsPage.vue";
 import StarterPage from "../pages/StarterPage.vue";
-import SignInPage from "../pages/Authentication/SignInPage.vue";
-
-import SignUpPage from "../pages/Authentication/SignUpPage.vue";
-
 import LockScreenPage from "../pages/Authentication/LockScreenPage.vue";
-import LogOutPage from "../pages/Authentication/LogOutPage.vue";
-
 import MyProfilePage from "../pages/MyProfilePage.vue";
-
 import TestPage from "../components/Pages/Test/TestPage.vue"
-
-
 import ErrorPage from "../pages/ErrorPage.vue";
 import DashboardPage from "@/pages/Dashboard/DashboardPage.vue";
 import StaffListPage from "@/pages/Staff/StaffListPage.vue";
@@ -123,35 +106,11 @@ const routes = [
     component: StarterPage,
   },
 
-  {
-    path: "/users/team-members",
-    name: "TeamMembersPage",
-    component: TeamMembersPage,
-  },
-  {
-    path: "/users/users-list",
-    name: "UsersListPage",
-    component: UsersListPage,
-  },
-  {
-    path: "/users/add-user",
-    name: "AddUserPage",
-    component: AddUserPage,
-  },
+
   {
     path: "/profile/user-profile",
     name: "UserProfilePage",
     component: UserProfilePage,
-  },
-  {
-    path: "/profile/profile-teams",
-    name: "UserTeamPage",
-    component: UserTeamPage,
-  },
-  {
-    path: "/profile/profile-projects",
-    name: "UserProjectsPage",
-    component: UserProjectsPage,
   },
 
   {
@@ -161,24 +120,9 @@ const routes = [
   },
 
   {
-    path: "/social/settings",
-    name: "SettingsPage",
-    component: SettingsPage,
-  },
-  {
-    path: "/authentication/sign-in",
-    name: "SignInPage",
-    component: SignInPage,
-  },
-  {
     path: "/login",
     name: "LoginPage",
     component: LoginPage,
-  },
-  {
-    path: "/authentication/sign-up",
-    name: "SignUpPage",
-    component: SignUpPage,
   },
   {
     path: "/lock-screen",
@@ -200,14 +144,17 @@ const router = createRouter({
 });
 // Navigation guards
 router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem('token');
+  const token = localStorage.getItem('user');
   const isLocked = localStorage.getItem('isLocked') === 'true';
+
+  console.log(`Token: ${token}`);
+  console.log(isLocked);
 
   if (to.meta.requiresAuth && !token) {
     next('/login');
   } else if (to.meta.requiresGuest && token) {
     next('/');
-  } else if (isLocked && to.path !== '/lock') {
+  } else if (isLocked && to.path !== '/lock-screen') {
     next('/lock-screen');
   } else {
     next();

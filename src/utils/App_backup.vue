@@ -5,7 +5,7 @@
       <TopHeader v-if="shouldShowHeader && !isNotFound" />
 
       <div
-        :class="[
+          :class="[
           'main-content transition-all flex flex-col overflow-hidden min-h-screen',
           {
             active: stateStoreInstance.open,
@@ -17,6 +17,7 @@
         <div class="grow"></div>
         <MainFooter v-if="shouldShowFooter && !isNotFound" />
       </div>
+
       <AddNewTaskPopup />
       <AddNewCardPopup />
     </div>
@@ -25,7 +26,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, watchEffect, computed, watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import stateStore from "./utils/store";
 
 import LeftSidebar from "./components/Layouts/LeftSidebar.vue";
@@ -37,8 +38,10 @@ import AddNewCardPopup from "./components/Layouts/AddNewCardPopup.vue";
 const direction = ref("ltr");
 const stateStoreInstance = stateStore;
 const route = useRoute();
+const router = useRouter();
 
-const hiddenRoutes = [
+// Routes that do not require authentication
+const publicRoutes = [
   "/features",
   "/team",
   "/faq",
@@ -54,11 +57,11 @@ const hiddenRoutes = [
   "/extra-pages/coming-soon",
 ];
 
-const shouldShowSidebar = computed(() => !hiddenRoutes.includes(route.path));
-const shouldShowPaddingZero = computed(() => hiddenRoutes.includes(route.path));
-const shouldShowHeader = computed(() => !hiddenRoutes.includes(route.path));
-const shouldShowDiv = computed(() => !hiddenRoutes.includes(route.path));
-const shouldShowFooter = computed(() => !hiddenRoutes.includes(route.path));
+const shouldShowSidebar = computed(() => !publicRoutes.includes(route.path));
+const shouldShowPaddingZero = computed(() => publicRoutes.includes(route.path));
+const shouldShowHeader = computed(() => !publicRoutes.includes(route.path));
+const shouldShowDiv = computed(() => !publicRoutes.includes(route.path));
+const shouldShowFooter = computed(() => !publicRoutes.includes(route.path));
 
 const isNotFound = computed(() =>
     route.matched.some(
@@ -66,7 +69,13 @@ const isNotFound = computed(() =>
     )
 );
 
+// 🔒 Redirect to /login if no token
 onMounted(() => {
+  const token = localStorage.getItem("token");
+  if (!token && !publicRoutes.includes(route.path)) {
+    router.push("/login");
+  }
+
   watchEffect(() => {
     if (stateStore.open) {
       document.body.classList.remove("sidebar-show");
@@ -78,6 +87,7 @@ onMounted(() => {
   });
 });
 
+// Watch direction (RTL / LTR)
 watch(
     direction,
     (newDirection) => {
@@ -86,4 +96,3 @@ watch(
     { immediate: true }
 );
 </script>
-

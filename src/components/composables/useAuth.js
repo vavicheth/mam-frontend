@@ -16,6 +16,7 @@ export function useAuth() {
     const login = async (credentials) => {
         try {
             const response = await authService.login(credentials);
+            console.log(response);
             token.value = response.data.token;
             user.value = response.data.user;
 

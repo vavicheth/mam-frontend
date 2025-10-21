@@ -116,64 +116,31 @@
         </div>
 
         <!-- Event Link -->
-<!--        <div v-if="event.event_link" class="space-y-1 md:col-span-2">-->
-<!--          <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">-->
-<!--            Event Link-->
-<!--          </label>-->
-<!--          <a-->
-<!--              :href="event.event_link"-->
-<!--              target="_blank"-->
-<!--              rel="noopener noreferrer"-->
-<!--              class="text-sm text-primary-500 hover:text-primary-600 leading-relaxed bg-gray-50 dark:bg-[#15203c] px-4 py-3 rounded-md block break-all transition-colors"-->
-<!--          >-->
-<!--            {{ event.event_link }}-->
-<!--          </a>-->
-<!--        </div>-->
+        <div v-if="event.event_link" class="space-y-1 md:col-span-2">
+          <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+            Event Link
+          </label>
+          <a
+              :href="event.event_link"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-sm text-primary-500 hover:text-primary-600 leading-relaxed bg-gray-50 dark:bg-[#15203c] px-4 py-3 rounded-md block break-all transition-colors"
+          >
+            {{ event.event_link }}
+          </a>
+        </div>
 
-<!--        &lt;!&ndash; QR Code &ndash;&gt;-->
-<!--        <div v-if="event.qr_code" class="space-y-1 md:col-span-2">-->
-<!--          <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">-->
-<!--            QR Code-->
-<!--          </label>-->
-<!--          <div class="bg-gray-50 dark:bg-[#15203c] px-4 py-3 rounded-md">-->
-<!--            <img :src="event.qr_code" alt="Event QR Code" class="max-w-[200px] h-auto" />-->
-<!--          </div>-->
-<!--        </div>-->
+        <!-- QR Code -->
+        <div v-if="event.qr_code" class="space-y-1 md:col-span-2">
+          <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+            QR Code
+          </label>
+          <div class="bg-gray-50 dark:bg-[#15203c] px-4 py-3 rounded-md">
+            <img :src="event.qr_code" alt="Event QR Code" class="max-w-[200px] h-auto" />
+          </div>
+        </div>
       </div>
     </div>
-
-
-
-    <!-- Staff Join Event -->
-    <div class="trezo-card bg-white dark:bg-[#0c1427] p-[20px] md:p-[25px] rounded-md">
-      <form @submit.prevent="joinEvent" class="space-y-4">
-        <div>
-          <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide block mb-2">
-            Join Event
-          </label>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
-            Enter your Event Staff ID to join this event
-          </p>
-        </div>
-
-        <div class="flex gap-3">
-          <input
-              v-model="eventStaffId"
-              type="text"
-              placeholder="Enter Event Staff ID"
-              class="flex-1 px-4 py-2 border border-gray-300 dark:border-[#172036] rounded-md bg-white dark:bg-[#15203c] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
-          />
-          <button
-              type="submit"
-              :disabled="!eventStaffId || isJoining"
-              class="px-6 py-2 text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {{ isJoining ? 'Joining...' : 'Join Now' }}
-          </button>
-        </div>
-      </form>
-    </div>
-
 
     <!-- Staff in Event -->
     <div class="trezo-card bg-white dark:bg-[#0c1427] p-[20px] md:p-[25px] rounded-md">
@@ -335,66 +302,17 @@
         </table>
       </div>
 
-
-
-
-
-
     </div>
   </div>
 
-  <!-- Toast Notification -->
-  <Transition
-      enter-active-class="transition ease-out duration-300 transform"
-      enter-from-class="translate-y-2 opacity-0"
-      enter-to-class="translate-y-0 opacity-100"
-      leave-active-class="transition ease-in duration-200"
-      leave-from-class="translate-y-0 opacity-100"
-      leave-to-class="translate-y-2 opacity-0"
-  >
-    <div v-if="showToast" class="fixed top-5 right-5 z-[60] max-w-md w-full sm:w-auto">
-      <div class="bg-white dark:bg-[#0c1427] rounded-lg shadow-2xl overflow-hidden"
-           :class="toastType === 'success' ? 'border border-success-500' : 'border border-danger-500'">
-        <div class="flex items-start p-4 gap-3">
-          <div class="flex-shrink-0">
-            <div class="flex items-center justify-center w-10 h-10 rounded-full"
-                 :class="toastType === 'success' ? 'bg-success-50 dark:bg-success-500/10' : 'bg-danger-50 dark:bg-danger-500/10'">
-              <i class="material-symbols-outlined !text-[24px]"
-                 :class="toastType === 'success' ? 'text-success-500' : 'text-danger-500'">
-                {{ toastType === 'success' ? 'check_circle' : 'error' }}
-              </i>
-            </div>
-          </div>
-          <div class="flex-1 pt-0.5">
-            <h4 class="text-sm font-semibold text-black dark:text-white mb-1">
-              {{ toastType === 'success' ? 'Success!' : 'Error!' }}
-            </h4>
-            <p class="text-sm text-gray-600 dark:text-gray-400">{{ toastMessage }}</p>
-          </div>
-          <button
-              @click="showToast = false"
-              type="button"
-              class="flex-shrink-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-          >
-            <i class="material-symbols-outlined !text-[20px]">close</i>
-          </button>
-        </div>
-        <div class="h-1 bg-gray-100 dark:bg-[#15203c]">
-          <div class="h-full transition-all duration-[3000ms] ease-linear"
-               :class="toastType === 'success' ? 'bg-success-500' : 'bg-danger-500'"
-               :style="{ width: showToast ? '0%' : '100%' }"></div>
-        </div>
-      </div>
-    </div>
-  </Transition>
-
   <!-- Add Staff Modal -->
-  <div v-if="showAddStaffModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
-    <!-- Background overlay -->
-    <div class="fixed inset-0 bg-black bg-opacity-50" @click="closeAddStaffModal"></div>
+  <div v-if="showAddStaffModal" class="fixed inset-0 z-50 overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
+      <!-- Background overlay -->
+      <div class="fixed inset-0 transition-opacity bg-gray-500 bg-opacity-75 dark:bg-gray-900 dark:bg-opacity-75" @click="closeAddStaffModal"></div>
 
-    <!-- Modal panel -->
-    <div class="relative bg-white dark:bg-[#0c1427] rounded-lg shadow-xl w-full max-w-3xl z-10 max-h-[90vh] flex flex-col">
+      <!-- Modal panel -->
+      <div class="inline-block align-bottom bg-white dark:bg-[#0c1427] rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full">
         <!-- Modal Header -->
         <div class="px-6 py-4 border-b border-gray-200 dark:border-[#172036]">
           <div class="flex items-center justify-between">
@@ -429,43 +347,40 @@
             </div>
           </div>
 
-          <!-- Content when not loading -->
-          <div v-else>
-            <!-- Staff List -->
-            <div v-if="filteredAvailableStaff.length > 0" class="space-y-2">
-              <div
-                  v-for="staff in filteredAvailableStaff"
-                  :key="staff._id"
-                  class="flex items-center p-3 border border-gray-200 dark:border-[#172036] rounded-md hover:bg-gray-50 dark:hover:bg-[#15203c] transition-colors"
-              >
-                <input
-                    type="checkbox"
-                    :id="`staff-${staff._id}`"
-                    :value="staff._id"
-                    v-model="selectedStaffIds"
-                    class="w-4 h-4 text-primary-500 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-                <label :for="`staff-${staff._id}`" class="ml-3 flex-1 cursor-pointer">
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <p class="text-sm font-medium text-black dark:text-white">{{ staff.name_en }}</p>
-                      <p class="text-xs text-gray-500 dark:text-gray-400">{{ staff.name_kh }} • {{ staff.position }}</p>
-                    </div>
-                    <span class="text-xs px-2 py-1 rounded-full" :class="staff.gender === 'Male' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' : 'bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400'">
-                      {{ staff.gender }}
-                    </span>
+          <!-- Staff List -->
+          <div v-else-if="filteredAvailableStaff.length > 0" class="space-y-2">
+            <div
+                v-for="staff in filteredAvailableStaff"
+                :key="staff._id"
+                class="flex items-center p-3 border border-gray-200 dark:border-[#172036] rounded-md hover:bg-gray-50 dark:hover:bg-[#15203c] transition-colors"
+            >
+              <input
+                  type="checkbox"
+                  :id="`staff-${staff._id}`"
+                  :value="staff._id"
+                  v-model="selectedStaffIds"
+                  class="w-4 h-4 text-primary-500 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+              <label :for="`staff-${staff._id}`" class="ml-3 flex-1 cursor-pointer">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-sm font-medium text-black dark:text-white">{{ staff.name_en }}</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ staff.name_kh }} • {{ staff.position }}</p>
                   </div>
-                </label>
-              </div>
+                  <span class="text-xs px-2 py-1 rounded-full" :class="staff.gender === 'Male' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' : 'bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400'">
+                    {{ staff.gender }}
+                  </span>
+                </div>
+              </label>
             </div>
+          </div>
 
-            <!-- Empty State -->
-            <div v-else class="flex flex-col items-center justify-center py-8">
-              <div class="flex items-center justify-center w-12 h-12 mx-auto bg-gray-100 dark:bg-[#15203c] rounded-full mb-3">
-                <i class="material-symbols-outlined text-gray-400 !text-[24px]">group</i>
-              </div>
-              <p class="text-sm text-gray-600 dark:text-gray-400">No available staff found</p>
+          <!-- Empty State -->
+          <div v-else class="flex flex-col items-center justify-center py-8">
+            <div class="flex items-center justify-center w-12 h-12 mx-auto bg-gray-100 dark:bg-[#15203c] rounded-full mb-3">
+              <i class="material-symbols-outlined text-gray-400 !text-[24px]">group</i>
             </div>
+            <p class="text-sm text-gray-600 dark:text-gray-400">No available staff found</p>
           </div>
 
           <!-- Selected Count -->
@@ -495,8 +410,8 @@
           </button>
         </div>
       </div>
+    </div>
   </div>
-
 </template>
 
 <script setup lang="ts">
@@ -551,27 +466,6 @@ const isLoadingStaff = ref(false);
 const isSavingStaff = ref(false);
 
 const isLoadingDownloadQR= ref(false);
-
-// Join Event State
-const eventStaffId = ref('');
-const isJoining = ref(false);
-
-// Toast State
-const showToast = ref(false);
-const toastMessage = ref('');
-const toastType = ref<'success' | 'error'>('success');
-
-// Toast Helper Function
-const displayToast = (message: string, type: 'success' | 'error' = 'success') => {
-  toastMessage.value = message;
-  toastType.value = type;
-  showToast.value = true;
-
-  // Auto-hide toast after 3 seconds
-  setTimeout(() => {
-    showToast.value = false;
-  }, 3000);
-};
 
 // Utility function to format date and time
 const formatDateTime = (dateString: string): string => {
@@ -634,9 +528,8 @@ const downloadQRCode = async (event_staff: EventStaff) => {
         `${import.meta.env.VITE_API_URL}/events/get_qrcode?mode=download`,
         {
           title: `${staff.name_kh || staff.name_en}`,
-          description: `${event.value.title} (from ${formatDateTime(event.value.start_date)} to ${formatDateTime(event.value.end_date)} )`,
-          text: `${event_staff._id}`,
-          // text: `${window.location.origin}/events/${eventId}/event_staff/${event_staff._id}`,
+          description: `${event.value.title} (${formatDateTime(event.value.start_date)} to ${formatDateTime(event.value.end_date)} )`,
+          text: `${window.location.origin}/events/${eventId}/event_staff/${event_staff._id}`,
         },
         {
           responseType: 'blob' // Important: tells axios to expect a file
@@ -740,31 +633,12 @@ const closeAddStaffModal = () => {
 const fetchAllStaff = async () => {
   isLoadingStaff.value = true;
   try {
-    // Fetch all staff without pagination limit
-    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/staff`, {
-      params: {
-        limit: 1000 // Get all staff
-      }
-    });
-
-    // Handle different response formats
-    if (Array.isArray(data)) {
-      allStaff.value = data;
-    } else if (data.docs && Array.isArray(data.docs)) {
-      // Paginated response
-      allStaff.value = data.docs;
-    } else if (data.data && Array.isArray(data.data)) {
-      allStaff.value = data.data;
-    } else if (data.staffs && Array.isArray(data.staffs)) {
-      allStaff.value = data.staffs;
-    } else {
-      allStaff.value = [];
-      console.warn('Unexpected data format:', data);
-    }
+    const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/staffs`);
+    allStaff.value = data.data || data || [];
+    console.log(allStaff);
   } catch (err: any) {
     console.error('Failed to fetch staff:', err);
     alert('Failed to load staff list. Please try again.');
-    allStaff.value = [];
   } finally {
     isLoadingStaff.value = false;
   }
@@ -776,18 +650,10 @@ const addSelectedStaff = async () => {
   isSavingStaff.value = true;
 
   try {
-    // Convert proxy array to plain array and format for backend
-    const staffIds = [...selectedStaffIds.value];
-
-    // Format as array of objects with staff property
-    const eventStaffPayload = staffIds.map(staffId => ({
-      staff: staffId
-    }));
-
-    // Send formatted staff data to the backend
+    // Send selected staff IDs to the backend
     const { data } = await axios.patch(
-        `${import.meta.env.VITE_API_URL}/events/staff/${event.value._id}`,
-        { event_staff: eventStaffPayload }
+        `${import.meta.env.VITE_API_URL}/events/${event.value._id}/staff`,
+        { staff: selectedStaffIds.value }
     );
 
     // Update local event data with the latest info
@@ -795,46 +661,17 @@ const addSelectedStaff = async () => {
 
     // Close modal and reset selection
     closeAddStaffModal();
+    selectedStaffIds.value = [];
 
-    // Show success toast
-    displayToast("Staff successfully added to event!", "success");
+    alert("Staff successfully added to event!");
   } catch (err: any) {
-    // Show error toast
-    displayToast(err.response?.data?.message || "Failed to add staff. Please try again.", "error");
+    console.error("Failed to add staff:", err);
+    alert(err.response?.data?.message || "Failed to add staff. Please try again.");
   } finally {
     isSavingStaff.value = false;
-    fetchEvent();
   }
 };
 
-// Join Event Method
-const joinEvent = async () => {
-  if (!event.value || !eventStaffId.value.trim()) return;
-
-  isJoining.value = true;
-
-  try {
-    // Call the API to mark staff as joined
-    const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/events/${event.value._id}/event_staff/${eventStaffId.value}`
-    );
-
-    // Clear the input field
-    eventStaffId.value = '';
-
-    // Refresh the event data
-    await fetchEvent();
-
-    // Show success toast
-    displayToast("Successfully joined the event!", "success");
-  } catch (err: any) {
-    console.error('Failed to join event:', err);
-    // Show error toast
-    displayToast(err.response?.data?.message || "Failed to join event. Please check your Event Staff ID and try again.", "error");
-  } finally {
-    isJoining.value = false;
-  }
-};
 
 // Computed Properties
 const filteredAvailableStaff = computed(() => {
@@ -848,8 +685,8 @@ const filteredAvailableStaff = computed(() => {
   return allStaff.value
       .filter(staff => !assignedIds.includes(staff._id))
       .filter(staff =>
-          staff.name_en?.toLowerCase().includes(search) ||
-          staff.name_kh?.toLowerCase().includes(search)
+          staff.name_en.toLowerCase().includes(search) ||
+          staff.name_kh.toLowerCase().includes(search)
       );
 });
 

@@ -116,64 +116,31 @@
         </div>
 
         <!-- Event Link -->
-<!--        <div v-if="event.event_link" class="space-y-1 md:col-span-2">-->
-<!--          <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">-->
-<!--            Event Link-->
-<!--          </label>-->
-<!--          <a-->
-<!--              :href="event.event_link"-->
-<!--              target="_blank"-->
-<!--              rel="noopener noreferrer"-->
-<!--              class="text-sm text-primary-500 hover:text-primary-600 leading-relaxed bg-gray-50 dark:bg-[#15203c] px-4 py-3 rounded-md block break-all transition-colors"-->
-<!--          >-->
-<!--            {{ event.event_link }}-->
-<!--          </a>-->
-<!--        </div>-->
+        <div v-if="event.event_link" class="space-y-1 md:col-span-2">
+          <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+            Event Link
+          </label>
+          <a
+              :href="event.event_link"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-sm text-primary-500 hover:text-primary-600 leading-relaxed bg-gray-50 dark:bg-[#15203c] px-4 py-3 rounded-md block break-all transition-colors"
+          >
+            {{ event.event_link }}
+          </a>
+        </div>
 
-<!--        &lt;!&ndash; QR Code &ndash;&gt;-->
-<!--        <div v-if="event.qr_code" class="space-y-1 md:col-span-2">-->
-<!--          <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">-->
-<!--            QR Code-->
-<!--          </label>-->
-<!--          <div class="bg-gray-50 dark:bg-[#15203c] px-4 py-3 rounded-md">-->
-<!--            <img :src="event.qr_code" alt="Event QR Code" class="max-w-[200px] h-auto" />-->
-<!--          </div>-->
-<!--        </div>-->
+        <!-- QR Code -->
+        <div v-if="event.qr_code" class="space-y-1 md:col-span-2">
+          <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+            QR Code
+          </label>
+          <div class="bg-gray-50 dark:bg-[#15203c] px-4 py-3 rounded-md">
+            <img :src="event.qr_code" alt="Event QR Code" class="max-w-[200px] h-auto" />
+          </div>
+        </div>
       </div>
     </div>
-
-
-
-    <!-- Staff Join Event -->
-    <div class="trezo-card bg-white dark:bg-[#0c1427] p-[20px] md:p-[25px] rounded-md">
-      <form @submit.prevent="joinEvent" class="space-y-4">
-        <div>
-          <label class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wide block mb-2">
-            Join Event
-          </label>
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
-            Enter your Event Staff ID to join this event
-          </p>
-        </div>
-
-        <div class="flex gap-3">
-          <input
-              v-model="eventStaffId"
-              type="text"
-              placeholder="Enter Event Staff ID"
-              class="flex-1 px-4 py-2 border border-gray-300 dark:border-[#172036] rounded-md bg-white dark:bg-[#15203c] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
-          />
-          <button
-              type="submit"
-              :disabled="!eventStaffId || isJoining"
-              class="px-6 py-2 text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {{ isJoining ? 'Joining...' : 'Join Now' }}
-          </button>
-        </div>
-      </form>
-    </div>
-
 
     <!-- Staff in Event -->
     <div class="trezo-card bg-white dark:bg-[#0c1427] p-[20px] md:p-[25px] rounded-md">
@@ -343,51 +310,6 @@
     </div>
   </div>
 
-  <!-- Toast Notification -->
-  <Transition
-      enter-active-class="transition ease-out duration-300 transform"
-      enter-from-class="translate-y-2 opacity-0"
-      enter-to-class="translate-y-0 opacity-100"
-      leave-active-class="transition ease-in duration-200"
-      leave-from-class="translate-y-0 opacity-100"
-      leave-to-class="translate-y-2 opacity-0"
-  >
-    <div v-if="showToast" class="fixed top-5 right-5 z-[60] max-w-md w-full sm:w-auto">
-      <div class="bg-white dark:bg-[#0c1427] rounded-lg shadow-2xl overflow-hidden"
-           :class="toastType === 'success' ? 'border border-success-500' : 'border border-danger-500'">
-        <div class="flex items-start p-4 gap-3">
-          <div class="flex-shrink-0">
-            <div class="flex items-center justify-center w-10 h-10 rounded-full"
-                 :class="toastType === 'success' ? 'bg-success-50 dark:bg-success-500/10' : 'bg-danger-50 dark:bg-danger-500/10'">
-              <i class="material-symbols-outlined !text-[24px]"
-                 :class="toastType === 'success' ? 'text-success-500' : 'text-danger-500'">
-                {{ toastType === 'success' ? 'check_circle' : 'error' }}
-              </i>
-            </div>
-          </div>
-          <div class="flex-1 pt-0.5">
-            <h4 class="text-sm font-semibold text-black dark:text-white mb-1">
-              {{ toastType === 'success' ? 'Success!' : 'Error!' }}
-            </h4>
-            <p class="text-sm text-gray-600 dark:text-gray-400">{{ toastMessage }}</p>
-          </div>
-          <button
-              @click="showToast = false"
-              type="button"
-              class="flex-shrink-0 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
-          >
-            <i class="material-symbols-outlined !text-[20px]">close</i>
-          </button>
-        </div>
-        <div class="h-1 bg-gray-100 dark:bg-[#15203c]">
-          <div class="h-full transition-all duration-[3000ms] ease-linear"
-               :class="toastType === 'success' ? 'bg-success-500' : 'bg-danger-500'"
-               :style="{ width: showToast ? '0%' : '100%' }"></div>
-        </div>
-      </div>
-    </div>
-  </Transition>
-
   <!-- Add Staff Modal -->
   <div v-if="showAddStaffModal" class="fixed inset-0 z-50 flex items-center justify-center p-4">
     <!-- Background overlay -->
@@ -395,106 +317,106 @@
 
     <!-- Modal panel -->
     <div class="relative bg-white dark:bg-[#0c1427] rounded-lg shadow-xl w-full max-w-3xl z-10 max-h-[90vh] flex flex-col">
-        <!-- Modal Header -->
-        <div class="px-6 py-4 border-b border-gray-200 dark:border-[#172036]">
-          <div class="flex items-center justify-between">
-            <h3 class="text-lg font-semibold text-black dark:text-white">
-              Add Staff to Event
-            </h3>
-            <button @click="closeAddStaffModal" class="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
-              <i class="material-symbols-outlined">close</i>
-            </button>
-          </div>
-        </div>
-
-        <!-- Modal Body -->
-        <div class="px-6 py-4 max-h-[60vh] overflow-y-auto">
-          <!-- Search Bar -->
-          <div class="mb-4">
-            <input
-                v-model="staffSearchQuery"
-                type="text"
-                placeholder="Search staff by name..."
-                class="w-full px-4 py-2 border border-gray-300 dark:border-[#172036] rounded-md bg-white dark:bg-[#15203c] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
-            />
-          </div>
-
-          <!-- Loading State -->
-          <div v-if="isLoadingStaff" class="flex justify-center py-8">
-            <div role="status">
-              <svg aria-hidden="true" class="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
-              </svg>
-            </div>
-          </div>
-
-          <!-- Content when not loading -->
-          <div v-else>
-            <!-- Staff List -->
-            <div v-if="filteredAvailableStaff.length > 0" class="space-y-2">
-              <div
-                  v-for="staff in filteredAvailableStaff"
-                  :key="staff._id"
-                  class="flex items-center p-3 border border-gray-200 dark:border-[#172036] rounded-md hover:bg-gray-50 dark:hover:bg-[#15203c] transition-colors"
-              >
-                <input
-                    type="checkbox"
-                    :id="`staff-${staff._id}`"
-                    :value="staff._id"
-                    v-model="selectedStaffIds"
-                    class="w-4 h-4 text-primary-500 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                />
-                <label :for="`staff-${staff._id}`" class="ml-3 flex-1 cursor-pointer">
-                  <div class="flex items-center justify-between">
-                    <div>
-                      <p class="text-sm font-medium text-black dark:text-white">{{ staff.name_en }}</p>
-                      <p class="text-xs text-gray-500 dark:text-gray-400">{{ staff.name_kh }} • {{ staff.position }}</p>
-                    </div>
-                    <span class="text-xs px-2 py-1 rounded-full" :class="staff.gender === 'Male' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' : 'bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400'">
-                      {{ staff.gender }}
-                    </span>
-                  </div>
-                </label>
-              </div>
-            </div>
-
-            <!-- Empty State -->
-            <div v-else class="flex flex-col items-center justify-center py-8">
-              <div class="flex items-center justify-center w-12 h-12 mx-auto bg-gray-100 dark:bg-[#15203c] rounded-full mb-3">
-                <i class="material-symbols-outlined text-gray-400 !text-[24px]">group</i>
-              </div>
-              <p class="text-sm text-gray-600 dark:text-gray-400">No available staff found</p>
-            </div>
-          </div>
-
-          <!-- Selected Count -->
-          <div v-if="selectedStaffIds.length > 0" class="mt-4 p-3 bg-primary-50 dark:bg-primary-500/10 rounded-md">
-            <p class="text-sm text-primary-600 dark:text-primary-400">
-              {{ selectedStaffIds.length }} staff member{{ selectedStaffIds.length > 1 ? 's' : '' }} selected
-            </p>
-          </div>
-        </div>
-
-        <!-- Modal Footer -->
-        <div class="px-6 py-4 border-t border-gray-200 dark:border-[#172036] flex items-center justify-end gap-3">
-          <button
-              @click="closeAddStaffModal"
-              type="button"
-              class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-[#15203c] border border-gray-300 dark:border-[#172036] hover:bg-gray-50 dark:hover:bg-[#1a2744] rounded-md transition-colors"
-          >
-            Cancel
-          </button>
-          <button
-              @click="addSelectedStaff"
-              type="button"
-              :disabled="selectedStaffIds.length === 0 || isSavingStaff"
-              class="px-4 py-2 text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {{ isSavingStaff ? 'Adding...' : `Add ${selectedStaffIds.length > 0 ? selectedStaffIds.length : ''} Staff` }}
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-gray-200 dark:border-[#172036]">
+        <div class="flex items-center justify-between">
+          <h3 class="text-lg font-semibold text-black dark:text-white">
+            Add Staff to Event
+          </h3>
+          <button @click="closeAddStaffModal" class="text-gray-400 hover:text-gray-500 dark:hover:text-gray-300">
+            <i class="material-symbols-outlined">close</i>
           </button>
         </div>
       </div>
+
+      <!-- Modal Body -->
+      <div class="px-6 py-4 max-h-[60vh] overflow-y-auto">
+        <!-- Search Bar -->
+        <div class="mb-4">
+          <input
+              v-model="staffSearchQuery"
+              type="text"
+              placeholder="Search staff by name..."
+              class="w-full px-4 py-2 border border-gray-300 dark:border-[#172036] rounded-md bg-white dark:bg-[#15203c] text-black dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
+          />
+        </div>
+
+        <!-- Loading State -->
+        <div v-if="isLoadingStaff" class="flex justify-center py-8">
+          <div role="status">
+            <svg aria-hidden="true" class="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+              <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Content when not loading -->
+        <div v-else>
+          <!-- Staff List -->
+          <div v-if="filteredAvailableStaff.length > 0" class="space-y-2">
+            <div
+                v-for="staff in filteredAvailableStaff"
+                :key="staff._id"
+                class="flex items-center p-3 border border-gray-200 dark:border-[#172036] rounded-md hover:bg-gray-50 dark:hover:bg-[#15203c] transition-colors"
+            >
+              <input
+                  type="checkbox"
+                  :id="`staff-${staff._id}`"
+                  :value="staff._id"
+                  v-model="selectedStaffIds"
+                  class="w-4 h-4 text-primary-500 bg-gray-100 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+              />
+              <label :for="`staff-${staff._id}`" class="ml-3 flex-1 cursor-pointer">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <p class="text-sm font-medium text-black dark:text-white">{{ staff.name_en }}</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">{{ staff.name_kh }} • {{ staff.position }}</p>
+                  </div>
+                  <span class="text-xs px-2 py-1 rounded-full" :class="staff.gender === 'Male' ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400' : 'bg-pink-100 dark:bg-pink-900/30 text-pink-600 dark:text-pink-400'">
+                      {{ staff.gender }}
+                    </span>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- Empty State -->
+          <div v-else class="flex flex-col items-center justify-center py-8">
+            <div class="flex items-center justify-center w-12 h-12 mx-auto bg-gray-100 dark:bg-[#15203c] rounded-full mb-3">
+              <i class="material-symbols-outlined text-gray-400 !text-[24px]">group</i>
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-400">No available staff found</p>
+          </div>
+        </div>
+
+        <!-- Selected Count -->
+        <div v-if="selectedStaffIds.length > 0" class="mt-4 p-3 bg-primary-50 dark:bg-primary-500/10 rounded-md">
+          <p class="text-sm text-primary-600 dark:text-primary-400">
+            {{ selectedStaffIds.length }} staff member{{ selectedStaffIds.length > 1 ? 's' : '' }} selected
+          </p>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-4 border-t border-gray-200 dark:border-[#172036] flex items-center justify-end gap-3">
+        <button
+            @click="closeAddStaffModal"
+            type="button"
+            class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-[#15203c] border border-gray-300 dark:border-[#172036] hover:bg-gray-50 dark:hover:bg-[#1a2744] rounded-md transition-colors"
+        >
+          Cancel
+        </button>
+        <button
+            @click="addSelectedStaff"
+            type="button"
+            :disabled="selectedStaffIds.length === 0 || isSavingStaff"
+            class="px-4 py-2 text-sm font-medium text-white bg-primary-500 hover:bg-primary-600 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          {{ isSavingStaff ? 'Adding...' : `Add ${selectedStaffIds.length > 0 ? selectedStaffIds.length : ''} Staff` }}
+        </button>
+      </div>
+    </div>
   </div>
 
 </template>
@@ -551,27 +473,6 @@ const isLoadingStaff = ref(false);
 const isSavingStaff = ref(false);
 
 const isLoadingDownloadQR= ref(false);
-
-// Join Event State
-const eventStaffId = ref('');
-const isJoining = ref(false);
-
-// Toast State
-const showToast = ref(false);
-const toastMessage = ref('');
-const toastType = ref<'success' | 'error'>('success');
-
-// Toast Helper Function
-const displayToast = (message: string, type: 'success' | 'error' = 'success') => {
-  toastMessage.value = message;
-  toastType.value = type;
-  showToast.value = true;
-
-  // Auto-hide toast after 3 seconds
-  setTimeout(() => {
-    showToast.value = false;
-  }, 3000);
-};
 
 // Utility function to format date and time
 const formatDateTime = (dateString: string): string => {
@@ -634,9 +535,8 @@ const downloadQRCode = async (event_staff: EventStaff) => {
         `${import.meta.env.VITE_API_URL}/events/get_qrcode?mode=download`,
         {
           title: `${staff.name_kh || staff.name_en}`,
-          description: `${event.value.title} (from ${formatDateTime(event.value.start_date)} to ${formatDateTime(event.value.end_date)} )`,
-          text: `${event_staff._id}`,
-          // text: `${window.location.origin}/events/${eventId}/event_staff/${event_staff._id}`,
+          description: `${event.value.title} (${formatDateTime(event.value.start_date)} to ${formatDateTime(event.value.end_date)} )`,
+          text: `${window.location.origin}/events/${eventId}/event_staff/${event_staff._id}`,
         },
         {
           responseType: 'blob' // Important: tells axios to expect a file
@@ -796,43 +696,17 @@ const addSelectedStaff = async () => {
     // Close modal and reset selection
     closeAddStaffModal();
 
-    // Show success toast
-    displayToast("Staff successfully added to event!", "success");
+    alert("Staff successfully added to event!");
   } catch (err: any) {
-    // Show error toast
-    displayToast(err.response?.data?.message || "Failed to add staff. Please try again.", "error");
+    // console.error("Failed to add staff - Full error:", err);
+    // console.error("Error response:", err.response);
+    // console.error("Error data:", err.response?.data);
+    // console.error("Error status:", err.response?.status);
+    // console.error("Error message:", err.response?.data?.message);
+    alert(err.response?.data?.message || "Failed to add staff. Please try again.");
   } finally {
     isSavingStaff.value = false;
     fetchEvent();
-  }
-};
-
-// Join Event Method
-const joinEvent = async () => {
-  if (!event.value || !eventStaffId.value.trim()) return;
-
-  isJoining.value = true;
-
-  try {
-    // Call the API to mark staff as joined
-    const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/events/${event.value._id}/event_staff/${eventStaffId.value}`
-    );
-
-    // Clear the input field
-    eventStaffId.value = '';
-
-    // Refresh the event data
-    await fetchEvent();
-
-    // Show success toast
-    displayToast("Successfully joined the event!", "success");
-  } catch (err: any) {
-    console.error('Failed to join event:', err);
-    // Show error toast
-    displayToast(err.response?.data?.message || "Failed to join event. Please check your Event Staff ID and try again.", "error");
-  } finally {
-    isJoining.value = false;
   }
 };
 

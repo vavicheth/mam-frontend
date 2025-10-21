@@ -16,7 +16,7 @@
         <span
           class="font-bold text-black dark:text-white relative ltr:ml-[8px] rtl:mr-[8px] top-px text-xl"
         >
-          EMS
+          MAM
         </span>
       </RouterLink>
       <button
@@ -115,8 +115,8 @@
         <div
             class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap"
         >
-          <RouterLink
-              to="/authentication/lock-screen"
+          <button
+              @click="handleLock"
               class="accordion-button flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c]"
           >
             <i
@@ -125,14 +125,14 @@
               lock
             </i>
             <span class="title leading-none"> LockScreen </span>
-          </RouterLink>
+          </button>
         </div>
 
         <div
           class="accordion-item rounded-md text-black dark:text-white mb-[5px] whitespace-nowrap"
         >
-          <RouterLink
-            to="/authentication/sign-in"
+          <button
+            @click="handleLogout"
             class="accordion-button flex items-center transition-all py-[9px] ltr:pl-[14px] ltr:pr-[30px] rtl:pr-[14px] rtl:pl-[30px] rounded-md font-medium w-full relative hover:bg-gray-50 text-left dark:hover:bg-[#15203c]"
           >
             <i
@@ -141,7 +141,7 @@
               logout
             </i>
             <span class="title leading-none"> Logout </span>
-          </RouterLink>
+          </button>
         </div>
 
       </div>
@@ -149,56 +149,64 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted } from "vue";
+<script setup lang="ts">
+import { onMounted } from "vue";
 import stateStore from "@/utils/store";
 
-export default defineComponent({
-  name: "LeftSidebar",
-  setup() {
-    const stateStoreInstance = stateStore;
-    const initializeAccordions = () => {
-      const accordions = document.querySelectorAll<HTMLElement>(
-        ".accordion-button.toggle, .sidemenu-link.toggle"
-      );
-      accordions.forEach((accordion) => {
-        accordion.addEventListener("click", function () {
-          const siblingAccordions = Array.from(
-            this.closest(".accordion-collapse")?.querySelectorAll<HTMLElement>(
+import { useAuth } from '@/components/composables/useAuth.js';
+import Buttons from "@/components/Modules/UIElements/Buttons/index.vue";
+
+const { user, logout, lockScreen } = useAuth();
+
+const stateStoreInstance = stateStore;
+
+const handleLogout = () => {
+  logout();
+};
+
+const handleLock = () => {
+  lockScreen();
+};
+
+const initializeAccordions = () => {
+  const accordions = document.querySelectorAll<HTMLElement>(
+      ".accordion-button.toggle, .sidemenu-link.toggle"
+  );
+
+  accordions.forEach((accordion) => {
+    accordion.addEventListener("click", function () {
+      const siblingAccordions = Array.from(
+          this.closest(".accordion-collapse")?.querySelectorAll<HTMLElement>(
               ".accordion-button.toggle, .sidemenu-link.toggle"
-            ) || accordions
-          );
-          siblingAccordions.forEach((acc) => {
-            if (acc !== accordion) {
-              acc.classList.remove("open");
-              acc.setAttribute("aria-expanded", "false");
-              const nextSibling = acc.nextElementSibling as HTMLElement;
-              if (nextSibling) nextSibling.style.display = "none";
-            }
-          });
+          ) || accordions
+      );
 
-          this.classList.toggle("open");
-          const panel = this.nextElementSibling as HTMLElement;
-          if (panel) {
-            if (panel.style.display === "block") {
-              panel.style.display = "none";
-              this.setAttribute("aria-expanded", "false");
-            } else {
-              panel.style.display = "block";
-              this.setAttribute("aria-expanded", "true");
-            }
-          }
-        });
+      siblingAccordions.forEach((acc) => {
+        if (acc !== accordion) {
+          acc.classList.remove("open");
+          acc.setAttribute("aria-expanded", "false");
+          const nextSibling = acc.nextElementSibling as HTMLElement;
+          if (nextSibling) nextSibling.style.display = "none";
+        }
       });
-    };
 
-    onMounted(() => {
-      initializeAccordions();
+      this.classList.toggle("open");
+      const panel = this.nextElementSibling as HTMLElement;
+      if (panel) {
+        if (panel.style.display === "block") {
+          panel.style.display = "none";
+          this.setAttribute("aria-expanded", "false");
+        } else {
+          panel.style.display = "block";
+          this.setAttribute("aria-expanded", "true");
+        }
+      }
     });
+  });
+};
 
-    return {
-      stateStoreInstance,
-    };
-  },
+onMounted(() => {
+  initializeAccordions();
 });
 </script>
+

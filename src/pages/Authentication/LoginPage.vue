@@ -37,7 +37,7 @@
                 Username or Email Address
               </label>
               <input
-                  v-model="credentials.email"
+                  v-model="credentials.identifier"
                   type="text"
                   required
                   class="h-[55px] rounded-md text-black dark:text-white border border-gray-200 dark:border-[#172036] bg-white dark:bg-[#0c1427] px-[17px] block w-full outline-0 transition-all placeholder:text-gray-500 dark:placeholder:text-gray-400 focus:border-primary-500"
@@ -105,62 +105,46 @@
   </div>
 </template>
 
-<script lang="ts">
-import {ref, defineComponent, onMounted, onBeforeUnmount } from "vue";
-import {useAuth} from '@/components/composables/useAuth';
+<script setup lang="ts">
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import { useAuth } from "@/components/composables/useAuth";
+import {toast} from "vue3-toastify";
+import { authService } from '@/components/services/api.js';
 
+const { login, logout } = useAuth();
 
-export default {
-  // name: "LoginPage",
-  components: {
-  },
-  setup() {
-    const { login,logout } = useAuth();
-    const loading = ref(false);
-    const showPassword = ref(false);
-    const credentials = ref({
-      email: '',
-      password: ''
-    });
+const loading = ref(false);
+const showPassword = ref(false);
+const credentials = ref({
+  identifier: "",
+  password: "",
+});
 
-    onMounted(() => {
-      logout();
-      document.body.classList.add("bg-white");
+onMounted(() => {
+  // logout();
+  document.body.classList.add("bg-white");
+});
 
-    });
+onBeforeUnmount(() => {
+  document.body.classList.remove("bg-white");
+});
 
-    onBeforeUnmount(() => {
-      document.body.classList.remove("bg-white");
-    });
-
-    const changShowPassword = () => {
-      showPassword.value = !showPassword.value;
-    };
-
-    const handleLogin = async () => {
-      loading.value = true;
-      console.log("login", login(login));
-      try {
-        console.log('start login');
-        await login(credentials.value);
-        console.log("Login successful");
-      } catch (error) {
-        console.error('Login error:', error);
-      } finally {
-        loading.value = false;
-        console.log('finally', loading.value);
-      }
-    };
-
-    return {
-      login,
-      loading,
-      showPassword,
-      credentials,
-      changShowPassword,
-      handleLogin
-    };
-  }
+const changShowPassword = () => {
+  showPassword.value = !showPassword.value;
 };
 
+const handleLogin = async () => {
+  loading.value = true;
+  try {
+    await login(credentials.value);
+    console.log(credentials.value)
+    console.log("Login successful");
+  } catch (error) {
+    console.error("Login error:", error);
+  } finally {
+    loading.value = false;
+    console.log("finally", loading.value);
+  }
+};
 </script>
+
